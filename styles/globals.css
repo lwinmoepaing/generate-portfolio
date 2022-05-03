@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
@@ -13,4 +17,31 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.space-add-component {
+  min-height: 30vh;
+  background-color: #fafafa;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+  padding: 1rem 1rem;
+}
+
+.space-add-component:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.space-add-component::after {
+  content: "";
+  width: 93%;
+  height: 80%;
+  position: absolute;
+  border: 3px solid #7474e1;
+  border-radius: 1rem;
+  border-style: dashed;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
