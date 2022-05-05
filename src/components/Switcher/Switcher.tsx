@@ -1,6 +1,6 @@
 import React from "react";
 
-function Swithcer() {
+function Switcher() {
   return (
     <>
       <a
@@ -26,4 +26,4 @@ function Swithcer() {
   );
 }
 
-export default Swithcer;
+export default Switcher;
