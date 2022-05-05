@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import SpaceAddComponent from "../src/components/SpaceAddComponent";
-import Swithcer from "../src/components/Switcher/Swithcer";
+import Swithcer from "../src/components/Switcher/Switcher";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
