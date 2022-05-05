@@ -2,10 +2,13 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import SpaceAddComponent from "../src/components/SpaceAddComponent";
 import Switcher from "../src/components/Switcher/Switcher";
-import { FontContextProvider } from "../src/Context/FontContext";
-import styles from "../styles/Home.module.css";
+import { AppContextProvider } from "../src/Context/AppContext";
+import ChooseCompModal from "../src/components/Modal/ChooseCompModal";
+import { useState } from "react";
 
 const Home: NextPage = () => {
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
   return (
     <div>
       <Head>
@@ -14,10 +17,13 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <FontContextProvider>
+      <AppContextProvider>
         <Switcher />
-        <SpaceAddComponent />
-      </FontContextProvider>
+        <SpaceAddComponent onClick={() => setOpenModal(true)} />
+        {openModal && (
+          <ChooseCompModal onCloseModal={() => setOpenModal(false)} />
+        )}
+      </AppContextProvider>
     </div>
   );
 };

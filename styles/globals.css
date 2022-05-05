@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* This changes all the animations globally */
+:root {
+  --animate-duration: 600ms;
+  --animate-delay: 0.1s;
+}
+
 html,
 body {
   padding: 0;
@@ -21,7 +27,6 @@ a {
 
 .space-add-component {
   min-height: 30vh;
-  background-color: #fafafa;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -45,3 +50,4 @@ a {
   margin-left: 1rem;
   margin-right: 1rem;
 }
+

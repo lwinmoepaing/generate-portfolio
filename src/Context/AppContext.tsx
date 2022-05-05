@@ -26,7 +26,7 @@ const sampleAppContext: AppContextInterface = {
   },
 };
 
-export const FontContextProvider: React.FC<any> = ({ children }) => {
+export const AppContextProvider: React.FC<any> = ({ children }) => {
   const [state, setState] =
     React.useState<AppContextInterface>(sampleAppContext);
 
