@@ -1,34 +1,11 @@
-import App from "next/app";
 import * as React from "react";
-
-interface FontDoc {
-  titleFamily: string;
-  titleFamilyUrl: string;
-  bodyFamily: string;
-  bodyFamilyUrl: string;
-}
-
-interface ColorDoc {
-  primary: string;
-  secondary: string;
-  warning: string;
-  danger: string;
-  background: string;
-}
-
-interface AppContextInterface {
-  title: string;
-  font: FontDoc;
-  color: ColorDoc;
-
-  setFont?: (font: FontDoc) => void | any;
-  setColor?: (color: ColorDoc) => void | any;
-  setTitle?: (title: string) => void | any;
-}
+import {
+  AppContextInterface,
+  ColorDoc,
+  FontDoc,
+} from "../model/AppContextType";
 
 export const AppCtx = React.createContext<AppContextInterface | null>(null);
-
-// Provider in your app
 
 const sampleAppContext: AppContextInterface = {
   title: "My Portfolio",

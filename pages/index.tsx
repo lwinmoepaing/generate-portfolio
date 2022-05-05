@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import SpaceAddComponent from "../src/components/SpaceAddComponent";
-import Swithcer from "../src/components/Switcher/Switcher";
+import Switcher from "../src/components/Switcher/Switcher";
+import { FontContextProvider } from "../src/Context/FontContext";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
@@ -13,10 +14,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <Swithcer />
+      <FontContextProvider>
+        <Switcher />
         <SpaceAddComponent />
-      </main>
+      </FontContextProvider>
     </div>
   );
 };
