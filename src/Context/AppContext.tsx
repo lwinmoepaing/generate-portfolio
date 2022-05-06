@@ -4,9 +4,13 @@ import {
   AppContextInterface,
   ColorDoc,
   FontDoc,
+  SectionDoc,
 } from "../model/AppContextType";
 
-const initData: AppContextInterface = AppDataJson;
+const initData: AppContextInterface = {
+  ...AppDataJson,
+  onSelectSection: () => {},
+};
 
 export const AppCtx = React.createContext<AppContextInterface>(initData);
 
@@ -28,8 +32,14 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
     setState((prev) => ({ ...prev, title }));
   }, []);
 
+  const onSelectSection = React.useCallback((section: SectionDoc) => {
+    setState((prev) => ({ ...prev, sections: [...prev.sections, section] }));
+  }, []);
+
   return (
-    <AppCtx.Provider value={{ ...state, setFont, setColor, setTitle }}>
+    <AppCtx.Provider
+      value={{ ...state, setFont, setColor, setTitle, onSelectSection }}
+    >
       {children}
     </AppCtx.Provider>
   );

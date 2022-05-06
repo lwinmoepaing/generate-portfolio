@@ -1,13 +1,15 @@
 import React from "react";
+import { SectionDoc } from "../../model/AppContextType";
 
-interface selectedComponentInterface {
+interface HeaderListInterface {
   id: string;
   name: string;
   list: string[];
+  onSelectSection: (item: SectionDoc) => void | any;
 }
 
-const HeaderList: React.FC<selectedComponentInterface> = () => {
-  return <div>Header List</div>;
+const HeaderList: React.FC<HeaderListInterface> = ({ onSelectSection }) => {
+  return <div></div>;
 };
 
 export default HeaderList;

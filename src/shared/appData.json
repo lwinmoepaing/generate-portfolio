@@ -12,5 +12,6 @@
     "warning": "#fcce1a",
     "danger": "fc1a1a",
     "background": "#fafafa"
-  }
+  },
+  "sections": []
 }

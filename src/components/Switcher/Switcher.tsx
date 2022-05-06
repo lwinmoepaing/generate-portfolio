@@ -1,4 +1,5 @@
 import React from "react";
+import { useAppContext } from "../../Context/AppContext";
 import HeaderList from "../Headers/HeaderList";
 
 interface selectedComponentInterface {
@@ -11,10 +12,12 @@ interface SwitcherInterface {
 }
 
 const Switcher: React.FC<SwitcherInterface> = ({ selectedComponent }) => {
+  const { onSelectSection } = useAppContext();
+
   return (
     <>
       {selectedComponent.id === "Header" && (
-        <HeaderList {...selectedComponent} />
+        <HeaderList {...selectedComponent} onSelectSection={onSelectSection} />
       )}
     </>
   );
