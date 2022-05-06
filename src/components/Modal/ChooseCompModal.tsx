@@ -1,10 +1,48 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 
 interface ModalInterface {
   onCloseModal: () => void | any;
 }
 
 const ChooseCompModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
+  const [classes, setClasses] = useState<string[]>(
+    "relative mx-5 my-5 inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full animate__animated animate__zoomIn".split(
+      " "
+    )
+  );
+
+  const [closeClasses, setCloseClassses] = useState<string[]>(
+    "h-10 w-10 bg-gray-200 rounded-full absolute top-1 right-1 flex items-center justify-center animate__animated animate__zoomIn cursor-pointer".split(
+      " "
+    )
+  );
+
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const onCloseModalHandler = useCallback(() => {
+    if (loading) return;
+    setLoading(true);
+
+    setCloseClassses((prev) => {
+      return [
+        ...prev.filter((p) => p !== "animate__zoomIn"),
+        "animate__zoomOut",
+      ];
+    });
+
+    setClasses((prev) => {
+      setTimeout(() => {
+        if (onCloseModal) {
+          onCloseModal();
+        }
+      }, 250);
+      return [
+        ...prev.filter((p) => p !== "animate__zoomIn"),
+        "animate__zoomOut",
+      ];
+    });
+  }, [loading, onCloseModal]);
+
   return (
     <>
       <div
@@ -24,7 +62,7 @@ const ChooseCompModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
               &#8203;
             </span>
 
-            <div className="animate__animated animate__fadeIn relative mx-5 my-5 inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full">
+            <div className={classes.join(" ")}>
               <div className="grid grid-cols-3 gap-4">
                 <div>Header</div>
                 <div>Carousel</div>
@@ -35,12 +73,12 @@ const ChooseCompModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
             </div>
 
             <div
-              onClick={onCloseModal}
-              className="h-12 w-12 bg-red-100 rounded-full absolute top-0 right-0 flex items-center justify-center animate__animated animate__fadeIn cursor-pointer"
+              onClick={onCloseModalHandler}
+              className={closeClasses.join(" ")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-red-600"
+                className="h-6 w-6 text-gray-500"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
