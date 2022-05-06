@@ -1,0 +1,16 @@
+{
+  "title": "My Portfolio",
+  "font": {
+    "titleFamily": "Righteous",
+    "titleFamilyUrl": "https://fonts.googleapis.com/css2?family=Righteous&display=swap",
+    "bodyFamily": "Roboto",
+    "bodyFamilyUrl": "https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+  },
+  "color": {
+    "primary": "#7474e1",
+    "secondary": "#3c3cf5",
+    "warning": "#fcce1a",
+    "danger": "fc1a1a",
+    "background": "#fafafa"
+  }
+}

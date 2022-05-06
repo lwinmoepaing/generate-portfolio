@@ -1,3 +1,4 @@
+import AppDataJson from "../shared/appData.json";
 import * as React from "react";
 import {
   AppContextInterface,
@@ -5,30 +6,12 @@ import {
   FontDoc,
 } from "../model/AppContextType";
 
-export const AppCtx = React.createContext<AppContextInterface | null>(null);
+const initData: AppContextInterface = AppDataJson;
 
-const sampleAppContext: AppContextInterface = {
-  title: "My Portfolio",
-  font: {
-    titleFamily: "Righteous",
-    titleFamilyUrl:
-      "https://fonts.googleapis.com/css2?family=Righteous&display=swap",
-    bodyFamily: "Roboto",
-    bodyFamilyUrl:
-      "https://fonts.googleapis.com/css2?family=Roboto&display=swap",
-  },
-  color: {
-    primary: "#7474e1",
-    secondary: "#3c3cf5",
-    warning: "#fcce1a",
-    danger: "fc1a1a",
-    background: "#fafafa",
-  },
-};
+export const AppCtx = React.createContext<AppContextInterface>(initData);
 
 export const AppContextProvider: React.FC<any> = ({ children }) => {
-  const [state, setState] =
-    React.useState<AppContextInterface>(sampleAppContext);
+  const [state, setState] = React.useState<AppContextInterface>(initData);
 
   const setFont = React.useCallback((font: FontDoc) => {
     setState((prev) => ({
@@ -51,3 +34,5 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
     </AppCtx.Provider>
   );
 };
+
+export const useAppContext = () => React.useContext(AppCtx);
