@@ -6,13 +6,13 @@ interface ModalInterface {
 
 const ChooseCompModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
   const [classes, setClasses] = useState<string[]>(
-    "relative mx-5 my-5 inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full animate__animated animate__zoomIn".split(
+    "relativebg-white rounded-lg overflow-hidden w-full animate__animated animate__fadeInUp".split(
       " "
     )
   );
 
   const [closeClasses, setCloseClassses] = useState<string[]>(
-    "h-10 w-10 bg-gray-200 rounded-full absolute top-1 right-1 flex items-center justify-center animate__animated animate__zoomIn cursor-pointer".split(
+    "h-10 w-10 bg-gray-200 rounded-full absolute top-1 right-1 flex items-center justify-center animate__animated animate__fadeInUp cursor-pointer".split(
       " "
     )
   );
@@ -25,7 +25,7 @@ const ChooseCompModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
 
     setCloseClassses((prev) => {
       return [
-        ...prev.filter((p) => p !== "animate__zoomIn"),
+        ...prev.filter((p) => p !== "animate__fadeInUp"),
         "animate__zoomOut",
       ];
     });
@@ -37,8 +37,8 @@ const ChooseCompModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
         }
       }, 250);
       return [
-        ...prev.filter((p) => p !== "animate__zoomIn"),
-        "animate__zoomOut",
+        ...prev.filter((p) => p !== "animate__fadeInUp"),
+        "animate__fadeOutDown",
       ];
     });
   }, [loading, onCloseModal]);
@@ -51,25 +51,36 @@ const ChooseCompModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
         role="dialog"
         aria-modal="true"
       >
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div
+          className="fixed inset-0 bg-white  transition-opacity"
+          onClick={onCloseModalHandler}
+        ></div>
 
         <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex min-h-screen text-center">
-            <span
-              className="hidden sm:inline-block sm:align-middle sm:h-screen"
-              aria-hidden="true"
-            >
-              &#8203;
-            </span>
-
+          <div className="flex text-center justify-center items-center">
             <div className={classes.join(" ")}>
-              <div className="grid grid-cols-3 gap-4">
-                <div>Header</div>
-                <div>Carousel</div>
-                <div>About us</div>
-                <div>Skills</div>
-                <div>Contact us</div>
-              </div>
+              <dl>
+                <div className="bg-gray-50 px-4 py-5">
+                  <dt className="text-sm font-medium text-primary">Header</dt>
+                </div>
+                <div className="bg-white px-4 py-5">
+                  <dt className="text-sm font-medium text-primary">Carousel</dt>
+                </div>
+                <div className="bg-gray-50 px-4 py-5">
+                  <dt className="text-sm font-medium text-primary">About Us</dt>
+                </div>
+                <div className="bg-white px-4 py-5">
+                  <dt className="text-sm font-medium text-primary">Skills</dt>
+                </div>
+                <div className="bg-gray-50 px-4 py-5">
+                  <dt className="text-sm font-medium text-primary">
+                    Contact Us
+                  </dt>
+                </div>
+                <div className="bg-white px-4 py-5">
+                  <dt className="text-sm font-medium text-primary">Services</dt>
+                </div>
+              </dl>
             </div>
 
             <div
