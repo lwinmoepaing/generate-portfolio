@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+
 /* This changes all the animations globally */
 :root {
   --animate-duration: 600ms;
@@ -50,4 +52,3 @@ a {
   margin-left: 1rem;
   margin-right: 1rem;
 }
-

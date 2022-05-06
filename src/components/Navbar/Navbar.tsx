@@ -1,25 +1,31 @@
 import Image from "next/image";
 import React, { Component } from "react";
 import { useAppContext } from "../../Context/AppContext";
+import TitleText from "../Common/TitleText";
 
-const Navbar: React.FC = () => {
+interface NavbarInterface {
+  onClickSetting: () => void | any;
+}
+
+const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
   const { title } = useAppContext();
 
   return (
     <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
-        <a href="https://flowbite.com" className="flex items-center">
-          {/* <Image src="/docs/images/logo.svg" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo"> */}
-          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-            {title}
+        <a href="#" className="flex items-center">
+          {/* <Image src="/docs/images/logo.svg" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" /> */}
+          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white text-blue-600">
+            <TitleText value={title} />
           </span>
         </a>
         <div className="flex md:order-2">
           <button
             type="button"
+            onClick={onClickSetting}
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Get started
+            Setting
           </button>
           <button
             data-collapse-toggle="mobile-menu-4"

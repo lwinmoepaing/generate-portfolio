@@ -1,14 +1,29 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
+import { useAppContext } from "../../Context/AppContext";
 
 interface ModalInterface {
   onCloseModal: () => void | any;
 }
 
 const BaseContextModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
+  const { title, setTitle } = useAppContext();
+  const [editTitle, setEditTitle] = useState<string>(title);
+  const [isTouched, setIsTouched] = useState<boolean>(false);
+
+  const isErrorTitle = useMemo<boolean>(() => {
+    return !editTitle?.trim();
+  }, [editTitle]);
+
   const [classes, setClasses] = useState<string[]>(
-    "relativebg-white rounded-lg overflow-hidden w-full animate__animated animate__fadeInUp".split(
+    "flex-1 p-4 m-4 max-w-xl shadow-xl  animate__animated animate__fadeInUp".split(
       " "
     )
+  );
+
+  const normalFormClasses = useMemo<string>(
+    () =>
+      "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+    []
   );
 
   const [closeClasses, setCloseClassses] = useState<string[]>(
@@ -43,6 +58,25 @@ const BaseContextModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
     });
   }, [loading, onCloseModal]);
 
+  const handlerTitle = useCallback((e: any) => {
+    console.log(e);
+    setEditTitle(e.target.value);
+  }, []);
+
+  const onSubmitForm = useCallback(() => {
+    setIsTouched(true);
+
+    if (!editTitle) {
+      return;
+    }
+
+    if (setTitle) {
+      setTitle(editTitle);
+    }
+
+    onCloseModalHandler();
+  }, [editTitle, onCloseModalHandler, setTitle]);
+
   return (
     <>
       <div
@@ -57,8 +91,71 @@ const BaseContextModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
         ></div>
 
         <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex text-center justify-center items-center">
+          <div className="flex justify-center ">
             {/* Form Here */}
+
+            <form className={classes.join(" ")}>
+              <div className="relative z-0 w-full mb-6 group">
+                <input
+                  value={editTitle}
+                  onChange={handlerTitle}
+                  type="email"
+                  name="floating_email"
+                  className={[
+                    normalFormClasses,
+                    isTouched && isErrorTitle
+                      ? "border-red-600 focus:border-red-600"
+                      : "",
+                  ].join(" ")}
+                  placeholder=" "
+                />
+                <label
+                  htmlFor="floating_email"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Title
+                </label>
+                {isTouched && isErrorTitle && (
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-500">
+                    Title is not valid
+                  </p>
+                )}
+              </div>
+
+              <div className="flex justify-between">
+                <button
+                  type="button"
+                  onClick={onCloseModalHandler}
+                  className="flex bg-red-100 mr-3 text-red-400 justify-center  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={onSubmitForm}
+                  className="text-white bg-blue-700 flex justify-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  {/* <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                    <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        fill="rgb(29 78 216 / 0)"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                    ></circle>
+                    <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                    </svg> */}
+                  Submit
+                </button>
+              </div>
+            </form>
+
             {/* Form Here */}
 
             <div
