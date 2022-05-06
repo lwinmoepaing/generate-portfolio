@@ -1,0 +1,32 @@
+[
+  {
+    "id": "Header",
+    "name": "Header",
+    "list": ["HeaderOne"]
+  },
+  {
+    "id": "Skills",
+    "name": "Skills",
+    "list": ["Skills"]
+  },
+  {
+    "id": "Carousel",
+    "name": "Carousel",
+    "list": ["Carousel"]
+  },
+  {
+    "id": "About Us",
+    "name": "About Us",
+    "list": ["About"]
+  },
+  {
+    "id": "Contact Us",
+    "name": "Contact Us",
+    "list": ["Contact"]
+  },
+  {
+    "id": "Services",
+    "name": "Services",
+    "list": ["Services"]
+  }
+]

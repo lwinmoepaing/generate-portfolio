@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+
 
 /* This changes all the animations globally */
 :root {

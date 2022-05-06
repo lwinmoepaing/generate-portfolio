@@ -1,13 +1,23 @@
 import React from "react";
+import HeaderList from "../Headers/HeaderList";
 
-function Switcher() {
+interface selectedComponentInterface {
+  id: string;
+  name: string;
+  list: string[];
+}
+interface SwitcherInterface {
+  selectedComponent: selectedComponentInterface;
+}
+
+const Switcher: React.FC<SwitcherInterface> = ({ selectedComponent }) => {
   return (
     <>
-      <div>
-        <p> Swithc Compment </p>
-      </div>
+      {selectedComponent.id === "Header" && (
+        <HeaderList {...selectedComponent} />
+      )}
     </>
   );
-}
+};
 
 export default Switcher;

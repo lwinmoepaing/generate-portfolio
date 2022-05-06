@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from "react";
+import Switcher from "../Switcher/Switcher";
+import HeaderList from "../../shared/appHeaderList.json";
 
 interface ModalInterface {
   onCloseModal: () => void | any;
@@ -18,6 +20,7 @@ const ChooseCompModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
   );
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [selectedComponent, setSelectedComponent] = useState<null | any>(null);
 
   const onCloseModalHandler = useCallback(() => {
     if (loading) return;
@@ -43,6 +46,13 @@ const ChooseCompModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
     });
   }, [loading, onCloseModal]);
 
+  const onSelectedCharacter = useCallback(
+    (item: { id: string; name: string; list: string[] }) => {
+      setSelectedComponent(item);
+    },
+    []
+  );
+
   return (
     <>
       <div
@@ -57,49 +67,45 @@ const ChooseCompModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
         ></div>
 
         <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex text-center justify-center items-center">
-            <div className={classes.join(" ")}>
-              <dl>
-                <div className="bg-gray-50 px-4 py-5">
-                  <dt className="text-sm font-medium text-primary">Header</dt>
-                </div>
-                <div className="bg-white px-4 py-5">
-                  <dt className="text-sm font-medium text-primary">Carousel</dt>
-                </div>
-                <div className="bg-gray-50 px-4 py-5">
-                  <dt className="text-sm font-medium text-primary">About Us</dt>
-                </div>
-                <div className="bg-white px-4 py-5">
-                  <dt className="text-sm font-medium text-primary">Skills</dt>
-                </div>
-                <div className="bg-gray-50 px-4 py-5">
-                  <dt className="text-sm font-medium text-primary">
-                    Contact Us
-                  </dt>
-                </div>
-                <div className="bg-white px-4 py-5">
-                  <dt className="text-sm font-medium text-primary">Services</dt>
-                </div>
-              </dl>
+          {!selectedComponent && (
+            <div className="flex text-center justify-center items-center">
+              <div className={classes.join(" ")}>
+                <dl>
+                  {HeaderList.map((item, index) => (
+                    <div
+                      className={`${
+                        index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                      }  px-4 py-5 cursor-pointer`}
+                      key={item.id}
+                      onClick={() => onSelectedCharacter(item)}
+                    >
+                      <dt className="text-sm font-medium text-primary">
+                        {item.name}{" "}
+                      </dt>
+                    </div>
+                  ))}
+                </dl>
+              </div>
             </div>
+          )}
 
-            <div
-              onClick={onCloseModalHandler}
-              className={closeClasses.join(" ")}
+          {selectedComponent && (
+            <Switcher selectedComponent={selectedComponent} />
+          )}
+
+          <div onClick={onCloseModalHandler} className={closeClasses.join(" ")}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-gray-500"
+              viewBox="0 0 20 20"
+              fill="currentColor"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-gray-500"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
+              <path
+                fillRule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
           </div>
         </div>
       </div>
