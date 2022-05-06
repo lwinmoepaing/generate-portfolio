@@ -5,9 +5,11 @@ import Switcher from "../src/components/Switcher/Switcher";
 import { AppContextProvider } from "../src/Context/AppContext";
 import ChooseCompModal from "../src/components/Modal/ChooseCompModal";
 import { useState } from "react";
+import Navbar from "../src/components/Navbar/Navbar";
 
 const Home: NextPage = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [compOpenModal, setOpenCompModal] = useState<boolean>(false);
+  const [baseFormModal, setBaseFormModal] = useState<boolean>(false);
 
   return (
     <div>
@@ -18,10 +20,11 @@ const Home: NextPage = () => {
       </Head>
 
       <AppContextProvider>
-        <Switcher />
-        <SpaceAddComponent onClick={() => setOpenModal(true)} />
-        {openModal && (
-          <ChooseCompModal onCloseModal={() => setOpenModal(false)} />
+        <Navbar />
+        {/* <Switcher /> */}
+        <SpaceAddComponent onClick={() => setOpenCompModal(true)} />
+        {compOpenModal && (
+          <ChooseCompModal onCloseModal={() => setOpenCompModal(false)} />
         )}
       </AppContextProvider>
     </div>
