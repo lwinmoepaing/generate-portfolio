@@ -36,9 +36,20 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
     setState((prev) => ({ ...prev, sections: [...prev.sections, section] }));
   }, []);
 
+  const onUpdateSection = React.useCallback((section: SectionDoc) => {
+    // setState((prev) => ({ ...prev, sections: [...prev.sections, section] }));
+  }, []);
+
   return (
     <AppCtx.Provider
-      value={{ ...state, setFont, setColor, setTitle, onSelectSection }}
+      value={{
+        ...state,
+        setFont,
+        setColor,
+        setTitle,
+        onSelectSection,
+        onUpdateSection,
+      }}
     >
       {children}
     </AppCtx.Provider>

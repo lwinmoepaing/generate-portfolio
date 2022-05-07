@@ -90,7 +90,12 @@ const ChooseCompModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
           )}
 
           {selectedComponent && (
-            <Switcher selectedComponent={selectedComponent} />
+            <div className={classes.join(" ")}>
+              <Switcher
+                selectedComponent={selectedComponent}
+                onSelected={onCloseModalHandler}
+              />
+            </div>
           )}
 
           <div onClick={onCloseModalHandler} className={closeClasses.join(" ")}>

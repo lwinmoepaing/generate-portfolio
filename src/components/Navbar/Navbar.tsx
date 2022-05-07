@@ -8,7 +8,7 @@ interface NavbarInterface {
 }
 
 const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
-  const { title } = useAppContext();
+  const { title, sections } = useAppContext();
 
   return (
     <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
@@ -66,15 +66,17 @@ const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
           id="mobile-menu-4"
         >
           <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
-            <li>
-              <a
-                href="#"
-                className="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
-                aria-current="page"
-              >
-                <TitleText value={'Home'} />
-              </a>
-            </li>
+            {sections.map((item) => (
+              <li key={item.id}>
+                <a
+                  href="#"
+                  className="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+                  aria-current="page"
+                >
+                  <TitleText value={item.name} />
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

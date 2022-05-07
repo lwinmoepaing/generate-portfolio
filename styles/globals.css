@@ -43,7 +43,7 @@ a {
 
 .space-add-component::after {
   content: "";
-  width: 93%;
+  width: 98%;
   height: 80%;
   position: absolute;
   border: 3px solid #7474e1;
@@ -51,4 +51,8 @@ a {
   border-style: dashed;
   margin-left: 1rem;
   margin-right: 1rem;
+}
+
+.common-container {
+  max-width: 1600px;
 }

@@ -8,6 +8,7 @@ const SpaceAddComponent: React.FC<SpaceAddComponentInterface> = ({
   onClick,
 }) => {
   const [classes, setClasses] = useState<string[]>([
+    'container mx-auto',
     "space-add-component",
     "animate__animated",
   ]);

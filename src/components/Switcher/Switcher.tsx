@@ -9,15 +9,17 @@ interface selectedComponentInterface {
 }
 interface SwitcherInterface {
   selectedComponent: selectedComponentInterface;
+  onSelected: () => void | any;
 }
 
-const Switcher: React.FC<SwitcherInterface> = ({ selectedComponent }) => {
-  const { onSelectSection } = useAppContext();
-
+const Switcher: React.FC<SwitcherInterface> = ({
+  selectedComponent,
+  onSelected,
+}) => {
   return (
     <>
       {selectedComponent.id === "Header" && (
-        <HeaderList {...selectedComponent} onSelectSection={onSelectSection} />
+        <HeaderList {...selectedComponent} onSelected={onSelected} />
       )}
     </>
   );

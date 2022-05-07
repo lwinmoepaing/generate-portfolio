@@ -114,6 +114,7 @@ const BaseContextModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
                 >
                   Title
                 </label>
+
                 {isTouched && isErrorTitle && (
                   <p className="mt-1 text-sm text-red-600 dark:text-red-500">
                     Title is not valid

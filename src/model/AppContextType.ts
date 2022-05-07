@@ -42,12 +42,14 @@ export interface ButtonDoc {
 export interface SectionDoc {
   id: string; // Unique ID
   type: string; // Header
-  name: string; // HeaderOne
+  name: string; // Nav Name -> Home, About
+  comp_name: string; // HeaderOne, HeaderTwo
 
   // Common Fields
   swap_direction: boolean;
   title_text: string;
   body_text: string;
+  type_effect_text?: string[];
   bg_image?: BgImageDoc;
   side_image?: SideImageDoc;
   buttons: ButtonDoc[];
@@ -62,5 +64,6 @@ export interface AppContextInterface {
   setFont?: (font: FontDoc) => void | any;
   setColor?: (color: ColorDoc) => void | any;
   setTitle?: (title: string) => void | any;
+  onUpdateSection?: (section: SectionDoc) => void | any;
   onSelectSection: (section: SectionDoc) => void | any;
 }
