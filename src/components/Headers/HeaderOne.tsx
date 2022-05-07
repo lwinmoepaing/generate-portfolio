@@ -8,78 +8,39 @@ import { useAppContext } from "../../Context/AppContext";
 import SectionEditBoxWrapper from "../Common/SectionEditBoxWrapper";
 import SvgSwitcher from "../Switcher/SvgSwticher";
 import ImageUpload from "../Common/ImageUpload";
+import SectionSettingWrapper from "../Common/SectionSettingWrapper";
+import EditingHook from "../../hook/EditingHook";
 interface HeaderOneInterface {
   item: SectionDoc;
 }
 
 const HeaderOne: React.FC<HeaderOneInterface> = ({ item }) => {
   const { onDeleteSection, font, onUpdateSection, color } = useAppContext();
-  const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [editTitle, setEditTitle] = useState<string>(item.title_text);
-  const [editTypeEffect, setEditTypeEffect] = useState<string>(
-    item.type_effect_text?.join(",") || ""
-  );
-  const [editBodyText, setEditBodyText] = useState<string>(item.body_text);
-  const [sideImg, setSideImage] = useState<SideImageDoc>(
-    item.side_image || { image_type: "svg", image_name: "", url: "" }
-  );
-
+  const {
+    isEdit,
+    editTitle,
+    editTypeEffect,
+    editBodyText,
+    editSwapDir,
+    sideImg,
+    changeEdit,
+    onCancelEdit,
+    handlerTitle,
+    handlerBodyText,
+    handlerTypeEffect,
+    onUpate,
+    onDelete,
+    onChangeSVG,
+    onChangeImage,
+    handlerName,
+    handShowNavbar,
+    handleSwapDir,
+  } = EditingHook(item);
   const normalFormClasses = useMemo<string>(
     () =>
       "text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer",
     []
   );
-
-  const changeEdit = useCallback(() => setIsEdit(true), []);
-
-  const onCancelEdit = useCallback(() => {
-    setIsEdit(false);
-    setEditTitle(item.title_text);
-    setEditTypeEffect(item.type_effect_text?.join(",") || "");
-    if (item.side_image) {
-      setSideImage(item.side_image);
-    }
-  }, [item]);
-
-  const handlerTitle = useCallback((e: any) => {
-    setEditTitle(e.target.value);
-  }, []);
-
-  const handlerBodyText = useCallback((e: any) => {
-    setEditBodyText(e.target.value);
-  }, []);
-
-  const handlerTypeEffect = useCallback((e: any) => {
-    setEditTypeEffect(e.target.value);
-  }, []);
-
-  const onUpate = useCallback(() => {
-    if (onUpdateSection && item) {
-      onUpdateSection({
-        ...item,
-        title_text: editTitle,
-        body_text: editBodyText,
-        type_effect_text: editTypeEffect.split(","),
-        side_image: sideImg,
-      });
-    }
-    setIsEdit(false);
-  }, [editBodyText, editTitle, editTypeEffect, item, sideImg, onUpdateSection]);
-
-  const onDelete = useCallback(() => {
-    setIsEdit(false);
-    if (onDeleteSection && item) {
-      onDeleteSection(item);
-    }
-  }, [item, onDeleteSection]);
-
-  const onChangeSVG = useCallback((str: string) => {
-    setSideImage((prev) => ({ ...prev, image_name: str }));
-  }, []);
-
-  const onChangeImage = useCallback((str: string) => {
-    setSideImage((prev) => ({ ...prev, url: str }));
-  }, []);
 
   return (
     <div className="relative animate__animated animate__fadeIn">
@@ -91,7 +52,13 @@ const HeaderOne: React.FC<HeaderOneInterface> = ({ item }) => {
         onUpdate={onUpate}
       />
 
-      <div className="flex flex-col sm:flex-row w-full">
+      <div
+        className={`flex w-full ${
+          editSwapDir
+            ? "sm:flex-row-reverse flex-col-reverse"
+            : " flex-col sm:flex-row"
+        }`}
+      >
         <div className="w-full sm:w-1/2 flex flex-col justify-center items-center pt-14 px-3 pb-4 sm:py-0">
           <div className="w-full text-center">
             {!isEdit && (
@@ -191,11 +158,19 @@ const HeaderOne: React.FC<HeaderOneInterface> = ({ item }) => {
             {isEdit && (
               <ImageUpload onChangeImage={onChangeImage} url={sideImg.url} />
             )}
-
-            {/* {JSON.stringify(sideImg)} */}
           </div>
         </div>
       </div>
+
+      {isEdit && (
+        <SectionSettingWrapper
+          isEdit={isEdit}
+          sectoinItem={item}
+          onChangeDir={handleSwapDir}
+          onChangeName={handlerName}
+          onChangeShowNavbar={handShowNavbar}
+        />
+      )}
     </div>
   );
 };

@@ -12,6 +12,7 @@ const sampleSelected: SectionDoc = {
 
   // Common Fields
   swap_direction: false,
+  show_nav_bar: true,
   title_text: "Testing Title Text",
   body_text:
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque iusto, ex reprehenderit praesentium ducimus ",

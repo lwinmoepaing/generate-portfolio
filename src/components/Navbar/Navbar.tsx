@@ -25,7 +25,7 @@ const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
             onClick={onClickSetting}
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-3 py-1 text-center mr-3 md:mr-0"
             style={{
-              backgroundColor: color.primary
+              backgroundColor: color.primary,
             }}
           >
             <TitleText value={"Setting"} size="sm" color="#fff" />
@@ -36,7 +36,6 @@ const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
             className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="mobile-menu-4"
             aria-expanded="false"
-
           >
             <span className="sr-only">Open main menu</span>
             <svg
@@ -70,21 +69,23 @@ const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
           id="mobile-menu-4"
         >
           <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
-            {sections.map((item) => (
-              <li key={item.id}>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
-                  aria-current="page"
-                >
-                  <TitleText
-                    value={item.name}
-                    size="lg"
-                    color={color.primary}
-                  />
-                </a>
-              </li>
-            ))}
+            {sections
+              .filter((item) => item.show_nav_bar)
+              .map((item) => (
+                <li key={item.id}>
+                  <a
+                    href="#"
+                    className="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+                    aria-current="page"
+                  >
+                    <TitleText
+                      value={item.name}
+                      size="lg"
+                      color={color.primary}
+                    />
+                  </a>
+                </li>
+              ))}
           </ul>
         </div>
       </div>

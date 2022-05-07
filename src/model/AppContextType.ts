@@ -47,6 +47,7 @@ export interface SectionDoc {
 
   // Common Fields
   swap_direction: boolean;
+  show_nav_bar: boolean;
   title_text: string;
   body_text: string;
   type_effect_text?: string[];

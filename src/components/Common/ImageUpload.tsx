@@ -8,17 +8,31 @@ const sideClasses =
 interface ImageUploadInterface {
   onChangeImage: (a: string) => void | any;
   url: string;
+  style?: any;
 }
 
 const ImageUpload: React.FC<ImageUploadInterface> = ({
   onChangeImage,
   url,
+  style,
 }) => {
   const { color } = useAppContext();
 
   const inputRef = useRef<any>(null);
 
   const id = useMemo(() => nanoid(), []);
+
+  const styles = useMemo(() => {
+    if (style) {
+      return style;
+    }
+    return {
+      left: "50%",
+      transform: "translateX(-50%)",
+      bottom: 6,
+      backgroundColor: url ? "red" : color.primary,
+    };
+  }, [color, style, url]);
 
   const onClickImage = useCallback(() => {
     if (!url && inputRef?.current?.click) {
@@ -69,16 +83,7 @@ const ImageUpload: React.FC<ImageUploadInterface> = ({
         onChange={onFileChange}
       />
 
-      <div
-        className={sideClasses}
-        onClick={onClickImage}
-        style={{
-          left: "50%",
-          transform: "translateX(-50%)",
-          bottom: 6,
-          backgroundColor: url ? "red" : color.primary,
-        }}
-      >
+      <div className={sideClasses} onClick={onClickImage} style={styles}>
         {url ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
