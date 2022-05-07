@@ -25,6 +25,7 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
   }, []);
 
   const setColor = React.useCallback((color: ColorDoc) => {
+    console.log("Inside Setting Color");
     setState((prev) => ({ ...prev, color }));
   }, []);
 
@@ -40,6 +41,13 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
     // setState((prev) => ({ ...prev, sections: [...prev.sections, section] }));
   }, []);
 
+  const onDeleteSection = React.useCallback((section: SectionDoc) => {
+    setState((prev) => ({
+      ...prev,
+      sections: prev.sections.filter((sect) => sect.id !== section.id),
+    }));
+  }, []);
+
   return (
     <AppCtx.Provider
       value={{
@@ -49,6 +57,7 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
         setTitle,
         onSelectSection,
         onUpdateSection,
+        onDeleteSection,
       }}
     >
       {children}

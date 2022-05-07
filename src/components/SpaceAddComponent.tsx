@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from "react";
+import { useAppContext } from "../Context/AppContext";
+import TitleText from "./Common/TitleText";
 
 interface SpaceAddComponentInterface {
   onClick: () => void | any;
@@ -7,8 +9,10 @@ interface SpaceAddComponentInterface {
 const SpaceAddComponent: React.FC<SpaceAddComponentInterface> = ({
   onClick,
 }) => {
+  const { color } = useAppContext();
+
   const [classes, setClasses] = useState<string[]>([
-    'container mx-auto',
+    "container mx-auto",
     "space-add-component",
     "animate__animated",
   ]);
@@ -34,8 +38,18 @@ const SpaceAddComponent: React.FC<SpaceAddComponentInterface> = ({
   }, [loading, onClick]);
 
   return (
-    <div className={classes.join(" ")} onClick={onClickHandler}>
-      Space Add Component
+    <div
+      className={classes.join(" ")}
+      onClick={onClickHandler}
+      // style={{ borderColor: color.primary }}
+    >
+      <TitleText value={"Add New Section"} color={color.primary} />
+      <div
+        className="space-add-component-border"
+        style={{
+          borderColor: color.primary,
+        }}
+      ></div>
     </div>
   );
 };

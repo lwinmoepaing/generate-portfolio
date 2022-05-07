@@ -11,8 +11,10 @@ const sampleSelected: SectionDoc = {
 
   // Common Fields
   swap_direction: false,
-  title_text: "",
-  body_text: "",
+  title_text: "Testing Title Text",
+  body_text:
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque iusto, ex reprehenderit praesentium ducimus ",
+  type_effect_text: ["Testing", "Hello"],
   // bg_image?: BgImageDoc,
   // side_image?: SideImageDoc,
   buttons: [],

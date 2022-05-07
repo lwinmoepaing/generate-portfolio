@@ -1,13 +1,15 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useAppContext } from "../../Context/AppContext";
+import { ChromePicker } from "react-color";
 
 interface ModalInterface {
   onCloseModal: () => void | any;
 }
 
 const BaseContextModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
-  const { title, setTitle } = useAppContext();
+  const { title, setTitle, color, setColor } = useAppContext();
   const [editTitle, setEditTitle] = useState<string>(title);
+  const [primaryColor, setPrimaryColor] = useState<string>(color.primary);
   const [isTouched, setIsTouched] = useState<boolean>(false);
 
   const isErrorTitle = useMemo<boolean>(() => {
@@ -73,8 +75,15 @@ const BaseContextModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
       setTitle(editTitle);
     }
 
+    if (setColor && primaryColor) {
+      setColor({
+        ...color,
+        primary: primaryColor,
+      });
+    }
+
     onCloseModalHandler();
-  }, [editTitle, onCloseModalHandler, setTitle]);
+  }, [editTitle, setTitle, setColor, primaryColor, onCloseModalHandler, color]);
 
   return (
     <>
@@ -120,6 +129,14 @@ const BaseContextModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
                     Title is not valid
                   </p>
                 )}
+              </div>
+
+              <div className="relative z-0 w-full mb-6 group">
+                <ChromePicker
+                  color={primaryColor}
+                  onChangeComplete={(str) => setPrimaryColor(str.hex)}
+                  className="mx-auto"
+                />
               </div>
 
               <div className="flex justify-between">

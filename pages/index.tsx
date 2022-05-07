@@ -13,7 +13,7 @@ const Home: NextPage = () => {
   const [baseFormModal, setBaseFormModal] = useState<boolean>(false);
 
   const newLocal =
-    "https://fonts.googleapis.com/css2?family=Righteous&display=swap";
+    "https://fonts.googleapis.com/css2?family=Righteous&family=Roboto&display=swap";
 
   return (
     <div>

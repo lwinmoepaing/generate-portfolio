@@ -65,5 +65,6 @@ export interface AppContextInterface {
   setColor?: (color: ColorDoc) => void | any;
   setTitle?: (title: string) => void | any;
   onUpdateSection?: (section: SectionDoc) => void | any;
+  onDeleteSection?: (section: SectionDoc) => void | any;
   onSelectSection: (section: SectionDoc) => void | any;
 }
