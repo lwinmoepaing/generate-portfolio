@@ -1,25 +1,107 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { useAppContext } from "../../Context/AppContext";
 import HeaderList from "../Headers/HeaderList";
+import DeveloperOneSVG from "../Svgs/DeveloperOneSVG";
+import svgData from "../../shared/svgData.json";
+import ReadingOneSVG from "../Svgs/ReadingOneSVG";
 
-interface selectedComponentInterface {
-  id: string;
-  name: string;
-  list: string[];
-}
+const imgArr = Object.keys(svgData);
+
 interface SvgSwitcherInterface {
-  selectedComponent: selectedComponentInterface;
-  onSelected: () => void | any;
+  selectedComponent: string;
+  isEdit: boolean;
+  onChangeSVG: (a: string) => void | any;
 }
+
+const cancelClasses =
+  "h-10 w-10 bg-gray-200 absolute rounded-full flex items-center z-10 justify-center animate__animated animate__zoomIn cursor-pointer";
+
+const editClasses =
+  "h-10 w-10 bg-green-200 rounded-full flex items-center z-10 justify-center animate__animated animate__zoomIn cursor-pointer";
 
 const SvgSwitcher: React.FC<SvgSwitcherInterface> = ({
   selectedComponent,
-  onSelected,
+  onChangeSVG,
+  isEdit,
 }) => {
+  const { color } = useAppContext();
+
+  const currentIndex = useMemo(() => {
+    return imgArr.findIndex((img) => img === selectedComponent);
+  }, [selectedComponent]);
+
+  const increaseImg = useCallback(() => {
+    if (onChangeSVG && isEdit) {
+      console.log(currentIndex + 1 < imgArr.length - 1);
+      console.log(
+        `currentIndex ${currentIndex} + 1 < imgLen ${imgArr.length - 1}`
+      );
+      let str =
+        currentIndex + 1 < imgArr.length ? imgArr[currentIndex + 1] : imgArr[0];
+      console.log("str", str);
+      onChangeSVG(str);
+    }
+  }, [currentIndex, onChangeSVG, isEdit]);
+
+  const decrementImg = useCallback(() => {
+    if (onChangeSVG && isEdit) {
+      let str =
+        currentIndex - 1 < 0
+          ? imgArr[imgArr.length - 1]
+          : imgArr[currentIndex - 1];
+      console.log("str", str);
+      onChangeSVG(str);
+    }
+  }, [currentIndex, onChangeSVG, isEdit]);
+
   return (
     <>
-      {selectedComponent.id === "Header" && (
-        <HeaderList {...selectedComponent} onSelected={onSelected} />
+      {selectedComponent === svgData.DeveloperOne && <DeveloperOneSVG />}
+      {selectedComponent === svgData.ReadingOne && <ReadingOneSVG />}
+
+      {isEdit && (
+        <>
+          <div
+            onClick={decrementImg}
+            className={cancelClasses}
+            style={{ left: 0, bottom: "50%", backgroundColor: color.primary }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6  text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </div>
+          <div
+            onClick={increaseImg}
+            className={cancelClasses}
+            style={{ right: 6, bottom: "50%", backgroundColor: color.primary }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6  text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </div>
+        </>
       )}
     </>
   );

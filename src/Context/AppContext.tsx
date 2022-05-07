@@ -38,7 +38,18 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
   }, []);
 
   const onUpdateSection = React.useCallback((section: SectionDoc) => {
-    // setState((prev) => ({ ...prev, sections: [...prev.sections, section] }));
+    setState((prev) => {
+      const indexOfSection = prev.sections.findIndex(
+        (prevSect) => prevSect.id === section.id
+      );
+      
+      let updateSections = [...prev.sections];
+      if (indexOfSection !== -1) {
+        updateSections[indexOfSection] = section;
+      }
+
+      return { ...prev, sections: updateSections };
+    });
   }, []);
 
   const onDeleteSection = React.useCallback((section: SectionDoc) => {

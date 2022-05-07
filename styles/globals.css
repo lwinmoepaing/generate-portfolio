@@ -59,6 +59,23 @@ a {
   border: 3px solid #7474e1;
   border-radius: 1rem;
   border-style: dashed;
+  z-index: -2;
+}
+
+.side-imagee-border-image {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  margin: 20px 20px;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #7474e1;
+  border-style: dashed;
+  border-width: 1px;
+  z-index: -4;
 }
 
 .common-container {

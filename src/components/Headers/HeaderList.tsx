@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAppContext } from "../../Context/AppContext";
 import { SectionDoc } from "../../model/AppContextType";
+import svgData from "../../shared/svgData.json";
 import { nanoid } from "nanoid";
 
 const sampleSelected: SectionDoc = {
@@ -44,6 +45,11 @@ const HeaderList: React.FC<HeaderListInterface> = ({ list, onSelected }) => {
         type: "Header",
         comp_name: "HeaderOne",
         name: "Home",
+        side_image: {
+          image_type: "svg",
+          image_name: svgData.DeveloperOne,
+          url: "",
+        },
       });
       if (onSelected) {
         onSelected();

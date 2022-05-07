@@ -1,5 +1,4 @@
-[
-  {
-    "id": "DeveloperOne"
-  }
-]
+{
+  "DeveloperOne": "DeveloperOne",
+  "ReadingOne": "ReadingOne"
+}

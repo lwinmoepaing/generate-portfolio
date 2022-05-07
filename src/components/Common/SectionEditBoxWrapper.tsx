@@ -5,6 +5,7 @@ interface SectionEditBoxWrapperInterface {
   changeEdit: () => void | any;
   onCancelEdit: () => void | any;
   onDelete: () => void | any;
+  onUpdate: () => void | any;
   isEdit: boolean;
 }
 
@@ -12,30 +13,31 @@ const SectionEditBoxWrapper: React.FC<SectionEditBoxWrapperInterface> = ({
   changeEdit,
   onCancelEdit,
   onDelete,
+  onUpdate,
   isEdit,
 }) => {
   const { color } = useAppContext();
 
   const [submitClasses, setSubmitClasses] = useState<string[]>(
-    "mr-3 h-10 w-10 bg-blue-600 rounded-full flex items-center justify-center animate__animated animate__zoomIn cursor-pointer".split(
+    "mr-3 h-10 w-10 bg-blue-600 rounded-full flex items-center z-10  justify-center animate__animated animate__zoomIn cursor-pointer".split(
       " "
     )
   );
 
   const [closeClasses, setCloseClasses] = useState<string[]>(
-    "mr-3 h-10 w-10 bg-red-200 rounded-full flex items-center justify-center animate__animated animate__zoomIn cursor-pointer".split(
+    "mr-3 h-10 w-10 bg-red-200 rounded-full flex items-center z-10 justify-center animate__animated animate__zoomIn cursor-pointer".split(
       " "
     )
   );
 
   const [cancelClasses, setCancelClasses] = useState<string[]>(
-    "mr-3 h-10 w-10 bg-gray-200 rounded-full flex items-center justify-center animate__animated animate__zoomIn cursor-pointer".split(
+    "mr-3 h-10 w-10 bg-gray-200 rounded-full flex items-center z-10 justify-center animate__animated animate__zoomIn cursor-pointer".split(
       " "
     )
   );
 
   const [editClasses, setEditClasses] = useState<string[]>(
-    "mr-3 h-10 w-10 bg-green-200 rounded-full flex items-center justify-center animate__animated animate__zoomIn cursor-pointer".split(
+    "mr-3 h-10 w-10 bg-green-200 rounded-full flex items-center z-10 justify-center animate__animated animate__zoomIn cursor-pointer".split(
       " "
     )
   );
@@ -44,7 +46,7 @@ const SectionEditBoxWrapper: React.FC<SectionEditBoxWrapperInterface> = ({
     <>
       {isEdit && (
         <div
-          className="edit-component-border inset-0 animate__animated animate__fadeIn"
+          className="edit-component-border inset-0 animate__animated animate__fadeIn z--1"
           style={{ borderColor: color.primary }}
         ></div>
       )}
@@ -52,7 +54,7 @@ const SectionEditBoxWrapper: React.FC<SectionEditBoxWrapperInterface> = ({
         {isEdit && (
           <>
             <div
-              // onClick={onCloseModalHandler}
+              onClick={onUpdate}
               className={submitClasses.join(" ")}
             >
               <svg
@@ -106,10 +108,7 @@ const SectionEditBoxWrapper: React.FC<SectionEditBoxWrapperInterface> = ({
               </svg>
             </div>
 
-            <div
-              onClick={onDelete}
-              className={closeClasses.join(" ")}
-            >
+            <div onClick={onDelete} className={closeClasses.join(" ")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 text-red-600"
