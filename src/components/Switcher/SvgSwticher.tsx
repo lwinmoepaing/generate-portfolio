@@ -13,11 +13,8 @@ interface SvgSwitcherInterface {
   onChangeSVG: (a: string) => void | any;
 }
 
-const cancelClasses =
+const sideClasses =
   "h-10 w-10 bg-gray-200 absolute rounded-full flex items-center z-10 justify-center animate__animated animate__zoomIn cursor-pointer";
-
-const editClasses =
-  "h-10 w-10 bg-green-200 rounded-full flex items-center z-10 justify-center animate__animated animate__zoomIn cursor-pointer";
 
 const SvgSwitcher: React.FC<SvgSwitcherInterface> = ({
   selectedComponent,
@@ -63,7 +60,7 @@ const SvgSwitcher: React.FC<SvgSwitcherInterface> = ({
         <>
           <div
             onClick={decrementImg}
-            className={cancelClasses}
+            className={sideClasses}
             style={{ left: 0, bottom: "50%", backgroundColor: color.primary }}
           >
             <svg
@@ -83,7 +80,7 @@ const SvgSwitcher: React.FC<SvgSwitcherInterface> = ({
           </div>
           <div
             onClick={increaseImg}
-            className={cancelClasses}
+            className={sideClasses}
             style={{ right: 6, bottom: "50%", backgroundColor: color.primary }}
           >
             <svg

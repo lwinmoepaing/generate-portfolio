@@ -7,6 +7,7 @@ import DeveloperOneSVG from "../Svgs/DeveloperOneSVG";
 import { useAppContext } from "../../Context/AppContext";
 import SectionEditBoxWrapper from "../Common/SectionEditBoxWrapper";
 import SvgSwitcher from "../Switcher/SvgSwticher";
+import ImageUpload from "../Common/ImageUpload";
 interface HeaderOneInterface {
   item: SectionDoc;
 }
@@ -35,6 +36,9 @@ const HeaderOne: React.FC<HeaderOneInterface> = ({ item }) => {
     setIsEdit(false);
     setEditTitle(item.title_text);
     setEditTypeEffect(item.type_effect_text?.join(",") || "");
+    if (item.side_image) {
+      setSideImage(item.side_image);
+    }
   }, [item]);
 
   const handlerTitle = useCallback((e: any) => {
@@ -56,10 +60,11 @@ const HeaderOne: React.FC<HeaderOneInterface> = ({ item }) => {
         title_text: editTitle,
         body_text: editBodyText,
         type_effect_text: editTypeEffect.split(","),
+        side_image: sideImg,
       });
     }
     setIsEdit(false);
-  }, [editBodyText, editTitle, editTypeEffect, item, onUpdateSection]);
+  }, [editBodyText, editTitle, editTypeEffect, item, sideImg, onUpdateSection]);
 
   const onDelete = useCallback(() => {
     setIsEdit(false);
@@ -70,6 +75,10 @@ const HeaderOne: React.FC<HeaderOneInterface> = ({ item }) => {
 
   const onChangeSVG = useCallback((str: string) => {
     setSideImage((prev) => ({ ...prev, image_name: str }));
+  }, []);
+
+  const onChangeImage = useCallback((str: string) => {
+    setSideImage((prev) => ({ ...prev, url: str }));
   }, []);
 
   return (
@@ -164,11 +173,26 @@ const HeaderOne: React.FC<HeaderOneInterface> = ({ item }) => {
                 style={{ borderColor: color.primary }}
               ></div>
             )}
-            <SvgSwitcher
-              selectedComponent={sideImg?.image_name || ""}
-              onChangeSVG={onChangeSVG}
-              isEdit={isEdit}
-            />
+
+            {sideImg.url ? (
+              <img
+                src={sideImg.url}
+                className="object-contain"
+                alt={editTitle}
+              />
+            ) : (
+              <SvgSwitcher
+                selectedComponent={sideImg?.image_name || ""}
+                onChangeSVG={onChangeSVG}
+                isEdit={isEdit}
+              />
+            )}
+
+            {isEdit && (
+              <ImageUpload onChangeImage={onChangeImage} url={sideImg.url} />
+            )}
+
+            {/* {JSON.stringify(sideImg)} */}
           </div>
         </div>
       </div>
