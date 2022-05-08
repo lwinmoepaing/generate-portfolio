@@ -53,8 +53,16 @@ const SvgSwitcher: React.FC<SvgSwitcherInterface> = ({
 
   return (
     <>
-      {selectedComponent === svgData.DeveloperOne && <DeveloperOneSVG />}
-      {selectedComponent === svgData.ReadingOne && <ReadingOneSVG />}
+      {selectedComponent === svgData.DeveloperOne && (
+        <div style={{ width: "100%", height: "100%" }}>
+          <DeveloperOneSVG />
+        </div>
+      )}
+      {selectedComponent === svgData.ReadingOne && (
+        <div style={{ width: "100%", height: "100%" }}>
+          <ReadingOneSVG />
+        </div>
+      )}
 
       {isEdit && (
         <>

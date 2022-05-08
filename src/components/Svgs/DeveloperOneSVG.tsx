@@ -6,8 +6,9 @@ const DeveloperOneSVG = (props: any) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      data-name="Layer 1"
-      viewBox="0 0 850.538 740.83"
+      viewBox="0 0 850 740"
+      fill="none"
+      stroke="currentColor"
       // width={850.538}
       // height={"auto"}
       {...props}
