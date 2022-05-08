@@ -11,13 +11,18 @@ interface SwitcherDetailInterface {
 const SwitcherDetail: React.FC<SwitcherDetailInterface> = ({
   selectedComponent,
 }) => {
+  const { editingSections } = useAppContext();
   return (
-    <>
+    <div
+      className={
+        editingSections === selectedComponent.id ? "z-20 relative" : ""
+      }
+    >
       {selectedComponent.type === "Header" &&
         selectedComponent.comp_name === "HeaderOne" && (
           <HeaderOne item={selectedComponent} />
         )}
-    </>
+    </div>
   );
 };
 

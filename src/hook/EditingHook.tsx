@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useAppContext } from "../Context/AppContext";
-import { SectionDoc, SideImageDoc } from "../model/AppContextType";
+import { ButtonDoc, SectionDoc, SideImageDoc } from "../model/AppContextType";
 
 const EditingHook = (item: SectionDoc) => {
   const {
@@ -23,6 +23,7 @@ const EditingHook = (item: SectionDoc) => {
   const [sideImg, setSideImage] = useState<SideImageDoc>(
     item.side_image || { image_type: "svg", image_name: "", url: "" }
   );
+  const [buttons, setButtons] = useState<ButtonDoc[]>(item.buttons);
 
   const changeEdit = useCallback(() => {
     setIsEdit(true);
@@ -61,6 +62,18 @@ const EditingHook = (item: SectionDoc) => {
       return;
     }
     if (onUpdateSection && item) {
+      const updateItem = {
+        ...item,
+        name: editName,
+        show_nav_bar: editShowNavbar,
+        swap_direction: editSwapDir,
+        title_text: editTitle,
+        body_text: editBodyText,
+        type_effect_text: editTypeEffect.split(","),
+        side_image: sideImg,
+        buttons: buttons,
+      };
+
       onUpdateSection({
         ...item,
         name: editName,
@@ -70,11 +83,13 @@ const EditingHook = (item: SectionDoc) => {
         body_text: editBodyText,
         type_effect_text: editTypeEffect.split(","),
         side_image: sideImg,
+        buttons: buttons,
       });
     }
     setIsEdit(false);
   }, [
     editName,
+    buttons,
     editShowNavbar,
     editSwapDir,
     editBodyText,
@@ -112,6 +127,10 @@ const EditingHook = (item: SectionDoc) => {
     setEditSwapDir(e);
   }, []);
 
+  const onChangeButtons = useCallback((btns: ButtonDoc[]) => {
+    setButtons(btns);
+  }, []);
+
   return {
     isEdit,
     editTitle,
@@ -121,6 +140,7 @@ const EditingHook = (item: SectionDoc) => {
     editShowNavbar,
     editSwapDir,
     sideImg,
+    buttons,
     changeEdit,
     onCancelEdit,
     handlerTitle,
@@ -129,6 +149,7 @@ const EditingHook = (item: SectionDoc) => {
     onUpate,
     onDelete,
     onChangeSVG,
+    onChangeButtons,
     onChangeImage,
     handlerName,
     handShowNavbar,

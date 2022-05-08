@@ -1,10 +1,11 @@
+import { nanoid } from "nanoid";
 import React, { useCallback, useMemo, useState } from "react";
 import { useAppContext } from "../../Context/AppContext";
-import { ChromePicker } from "react-color";
 import { ButtonDoc } from "../../model/AppContextType";
 
 interface ModalInterface {
   onUpdateButton: (item: ButtonDoc) => void | any;
+  onDeleteButton: (item: ButtonDoc) => void | any;
   onCloseModal: () => void | any;
   button: ButtonDoc;
 }
@@ -12,15 +13,31 @@ interface ModalInterface {
 const ButtonEditModal: React.FC<ModalInterface> = ({
   onCloseModal,
   onUpdateButton,
+  onDeleteButton,
   button,
 }) => {
-  const { color, setColor } = useAppContext();
   const [editTitle, setEditTitle] = useState<string>(button.name);
+  const [messageTitle, setMessageTitle] = useState<string>(
+    button.alert_title || ""
+  );
+  const [url, setUrl] = useState<string>(button.url || "");
+  const [actionType, setActionType] = useState<"url" | "alert">(
+    button.action_type
+  );
   const [isTouched, setIsTouched] = useState<boolean>(false);
+  const [radio1, radio2] = [nanoid(), nanoid()];
 
   const isErrorTitle = useMemo<boolean>(() => {
     return !editTitle?.trim();
   }, [editTitle]);
+
+  const isErrorMessageTitle = useMemo<boolean>(() => {
+    return !messageTitle?.trim();
+  }, [messageTitle]);
+
+  const isErrorUrl = useMemo<boolean>(() => {
+    return !url?.trim();
+  }, [url]);
 
   const [classes, setClasses] = useState<string[]>(
     "flex-1 p-4 m-4 max-w-xl shadow-xl  animate__animated animate__fadeInUp".split(
@@ -70,10 +87,30 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
     setEditTitle(e.target.value);
   }, []);
 
+  const handlerMessageTitle = useCallback((e: any) => {
+    setMessageTitle(e.target.value);
+  }, []);
+
+  const handlerUrlText = useCallback((e: any) => {
+    setUrl(e.target.value);
+  }, []);
+
+  const handlerActionType = useCallback((e: any) => {
+    setActionType(e.target.value);
+  }, []);
+
   const onSubmitForm = useCallback(() => {
     setIsTouched(true);
 
-    if (!editTitle) {
+    if (!editTitle?.trim()) {
+      return;
+    }
+
+    if (actionType === "alert" && !messageTitle?.trim()) {
+      return;
+    }
+
+    if (actionType === "url" && !url?.trim()) {
       return;
     }
 
@@ -81,16 +118,37 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
       onUpdateButton({
         ...button,
         name: editTitle,
+        alert_title: messageTitle,
+        action_type: actionType,
+        url: url,
       });
     }
 
     onCloseModalHandler();
-  }, [editTitle, onUpdateButton, onCloseModalHandler, button]);
+  }, [
+    editTitle,
+    actionType,
+    messageTitle,
+    url,
+    onUpdateButton,
+    onCloseModalHandler,
+    button,
+  ]);
+
+  const onDeleteForm = useCallback(() => {
+    if (onDeleteButton) {
+      onDeleteButton({
+        ...button,
+      });
+    }
+
+    onCloseModalHandler();
+  }, [onDeleteButton, onCloseModalHandler, button]);
 
   return (
     <>
       <div
-        className="absolute z-20 animate__animated animate__fadeIn"
+        className="relative z-30 animate__animated animate__fadeIn"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
@@ -101,11 +159,11 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
         ></div>
 
         <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex justify-center ">
+          <div className="flex justify-center">
             {/* Form Here */}
 
             <form className={classes.join(" ")}>
-              <div className="z-0 w-full mb-6 group">
+              <div className="relative flex flex-col items-start z-0 w-full mb-1 group">
                 <input
                   value={editTitle}
                   onChange={handlerTitle}
@@ -125,7 +183,6 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
                 >
                   Title
                 </label>
-
                 {isTouched && isErrorTitle && (
                   <p className="mt-1 text-sm text-red-600 dark:text-red-500">
                     Title is not valid
@@ -133,35 +190,114 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
                 )}
               </div>
 
-              <div className="flex justify-between">
+              <div className="flex justify-center items-start my-4">
+                <div className="form-check form-check-inline mr-3">
+                  <input
+                    className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id={radio1}
+                    value="alert"
+                    defaultChecked={actionType === "alert"}
+                    onChange={handlerActionType}
+                  />
+                  <label
+                    className="form-check-label inline-block text-gray-800"
+                    htmlFor={radio1}
+                  >
+                    Alert Message
+                  </label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id={radio2}
+                    value="url"
+                    defaultChecked={actionType === "url"}
+                    onChange={handlerActionType}
+                  />
+                  <label
+                    className="form-check-label inline-block text-gray-800"
+                    htmlFor={radio2}
+                  >
+                    Url Message
+                  </label>
+                </div>
+              </div>
+
+              {actionType === "alert" && (
+                <div className="relative flex flex-col items-start z-0 w-full mb-1 group">
+                  <input
+                    value={messageTitle}
+                    onChange={handlerMessageTitle}
+                    type="text"
+                    name="title"
+                    className={[
+                      normalFormClasses,
+                      isTouched && isErrorMessageTitle
+                        ? "border-red-600 focus:border-red-600"
+                        : "",
+                    ].join(" ")}
+                    placeholder=" "
+                  />
+                  <label
+                    htmlFor="title"
+                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  >
+                    Message
+                  </label>
+                  {isTouched && isErrorMessageTitle && (
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-500">
+                      Alert Message is not Valid
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {actionType === "url" && (
+                <div className="relative flex flex-col items-start z-0 w-full mb-1 group">
+                  <input
+                    value={url}
+                    onChange={handlerUrlText}
+                    type="text"
+                    name="title"
+                    className={[
+                      normalFormClasses,
+                      isTouched && isErrorUrl
+                        ? "border-red-600 focus:border-red-600"
+                        : "",
+                    ].join(" ")}
+                    placeholder=" "
+                  />
+                  <label
+                    htmlFor="title"
+                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  >
+                    Url (https://)
+                  </label>
+                  {isTouched && isErrorUrl && (
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-500">
+                      Url is Required
+                    </p>
+                  )}
+                </div>
+              )}
+
+              <div className="flex justify-between mt-3">
                 <button
                   type="button"
-                  onClick={onCloseModalHandler}
-                  className="flex bg-red-100 mr-3 text-red-400 justify-center  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={onDeleteForm}
+                  className="flex bg-red-500 mr-3 text-white justify-center  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  Cancel
+                  Delete
                 </button>
                 <button
                   type="button"
                   onClick={onSubmitForm}
                   className="text-white bg-blue-700 flex justify-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  {/* <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
-                    <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        fill="rgb(29 78 216 / 0)"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                    ></circle>
-                    <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                    </svg> */}
                   Submit
                 </button>
               </div>

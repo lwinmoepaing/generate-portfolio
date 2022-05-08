@@ -118,7 +118,7 @@ const SectionSettingWrapper: React.FC<SectionWrapperInterface> = ({
               className="form-check-label inline-block text-gray-800"
               htmlFor={showDirId}
             >
-              Swap
+              Swap Direction
             </label>
           </div>
         </div>

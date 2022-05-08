@@ -44,9 +44,22 @@ const ButtonList: React.FC<ButtonListInterface> = ({
 
   const onAddButtons = useCallback(() => {}, []);
 
-  const onDeleteButtons = useCallback(() => {}, []);
+  const onDeleteButtons = useCallback((btn: ButtonDoc) => {}, []);
 
-  const onUpdateButton = useCallback((btn: ButtonDoc) => {}, []);
+  const onUpdateButton = useCallback(
+    (btn: ButtonDoc) => {
+      const updateButton = [...buttons];
+      const findIndex = updateButton.findIndex((b) => b.id === btn.id);
+      if (findIndex !== -1) {
+        updateButton[findIndex] = btn;
+      }
+
+      if (onChangeButtons) {
+        onChangeButtons(updateButton);
+      }
+    },
+    [buttons, onChangeButtons]
+  );
 
   return (
     <>
@@ -71,11 +84,11 @@ const ButtonList: React.FC<ButtonListInterface> = ({
         </button>
       ))}
 
-      {JSON.stringify(openModal && selectedItem)}
       {openModal && selectedItem && (
         <ButtonEditModal
           button={selectedItem}
           onUpdateButton={onUpdateButton}
+          onDeleteButton={onDeleteButtons}
           onCloseModal={() => setOpenModal(false)}
         />
       )}

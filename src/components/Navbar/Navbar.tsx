@@ -8,7 +8,7 @@ interface NavbarInterface {
 }
 
 const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
-  const { title, sections, color } = useAppContext();
+  const { title, sections, color, editingSections } = useAppContext();
 
   return (
     <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
@@ -20,16 +20,18 @@ const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
           </span>
         </a>
         <div className="flex md:order-2">
-          <button
-            type="button"
-            onClick={onClickSetting}
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-3 py-1 text-center mr-3 md:mr-0"
-            style={{
-              backgroundColor: color.primary,
-            }}
-          >
-            <TitleText value={"Setting"} size="sm" color="#fff" />
-          </button>
+          {!editingSections && (
+            <button
+              type="button"
+              onClick={onClickSetting}
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-3 py-1 text-center mr-3 md:mr-0"
+              style={{
+                backgroundColor: color.primary,
+              }}
+            >
+              <TitleText value={"Setting"} size="sm" color="#fff" />
+            </button>
+          )}
           <button
             data-collapse-toggle="mobile-menu-4"
             type="button"
