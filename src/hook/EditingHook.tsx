@@ -86,32 +86,24 @@ const EditingHook = (item: SectionDoc) => {
         type_effect_text: editTypeEffect.split(","),
         side_image: sideImg,
         buttons: buttons,
+        timeLines: timeLines,
       };
 
-      onUpdateSection({
-        ...item,
-        name: editName,
-        show_nav_bar: editShowNavbar,
-        swap_direction: editSwapDir,
-        title_text: editTitle,
-        body_text: editBodyText,
-        type_effect_text: editTypeEffect.split(","),
-        side_image: sideImg,
-        buttons: buttons,
-      });
+      onUpdateSection(updateItem);
     }
     setIsEdit(false);
   }, [
     editName,
-    buttons,
+    onUpdateSection,
+    item,
     editShowNavbar,
     editSwapDir,
-    editBodyText,
     editTitle,
+    editBodyText,
     editTypeEffect,
-    item,
     sideImg,
-    onUpdateSection,
+    buttons,
+    timeLines,
   ]);
 
   const onDelete = useCallback(() => {

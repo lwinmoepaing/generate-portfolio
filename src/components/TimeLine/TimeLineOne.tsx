@@ -27,7 +27,8 @@ const TimeLineOne: React.FC<TimeLineOneInterface> = ({ item }) => {
     handleSwapDir,
   } = EditingHook(item);
 
-  const { handleTitleText, handleBodyText } = TimeLineHook();
+  const { handleTitleText, handleBodyText, createNewTimeLine, deleteTimeLine } =
+    TimeLineHook();
 
   const normalFormClasses = useMemo<string>(
     () =>
@@ -82,7 +83,7 @@ const TimeLineOne: React.FC<TimeLineOneInterface> = ({ item }) => {
                   </div>
                   <div className="order-1 w-5/12 py-4">
                     <div className="flex justify-center">
-                      <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+                      <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm relative">
                         <div className="mb-2">
                           {isEdit && (
                             <div className="relative w-full animate__animated animate__fadeIn justify-start flex">
@@ -115,6 +116,34 @@ const TimeLineOne: React.FC<TimeLineOneInterface> = ({ item }) => {
                               value={timeLine.title_text}
                               color={color.primary}
                             />
+                          )}
+
+                          {isEdit && (
+                            <div
+                              onClick={() =>
+                                onChangeTimelines(
+                                  deleteTimeLine(timeLines, timeLine)
+                                )
+                              }
+                              className={
+                                "top-0 right-0 absolute h-10 w-10 bg-red-700 rounded-full flex items-center z-10 justify-center animate__animated animate__zoomIn cursor-pointer"
+                              }
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5 text-red-100"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                ></path>
+                              </svg>
+                            </div>
                           )}
                         </div>
                         <div>
@@ -155,28 +184,34 @@ const TimeLineOne: React.FC<TimeLineOneInterface> = ({ item }) => {
         </div>
       </div>
 
-      {/* <div className="mb-8 flex justify-between  items-center w-full left-timeline">
-              <div className="order-1 w-5/12"></div>
-              <div
-                className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full"
-                style={{ backgroundColor: color.primary }}
-              >
-                <h1 className="mx-auto  font-semibold text-lg text-white">2</h1>
-              </div>
-              <div className="order-1 w-5/12 py-4">
-                <div className="flex justify-center">
-                  <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
-                    <div className="mb-2">
-                      <TitleText value="Card title" color={color.primary} />
-                    </div>
-                    <p className="text-gray-700 text-base mb-4">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div> */}
+      {isEdit && (
+        <div className="flex flex-row justify-center items-center">
+          <div
+            onClick={() => onChangeTimelines(createNewTimeLine(timeLines))}
+            className={
+              "h-8 w-8 rounded-full flex items-center justify-center animate__animated animate__fadeInUp cursor-pointer"
+            }
+            style={{
+              backgroundColor: color.primary,
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+          </div>
+        </div>
+      )}
 
       {isEdit && (
         <SectionSettingWrapper
