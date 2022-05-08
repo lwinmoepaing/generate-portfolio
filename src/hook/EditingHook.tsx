@@ -145,6 +145,10 @@ const EditingHook = (item: SectionDoc) => {
     setButtons(btns);
   }, []);
 
+  const onChangeTimelines = useCallback((tls: TimeLineDoc[]) => {
+    setTimeLines(tls);
+  }, []);
+
   return {
     isEdit,
     editTitle,
@@ -165,6 +169,7 @@ const EditingHook = (item: SectionDoc) => {
     onDelete,
     onChangeSVG,
     onChangeButtons,
+    onChangeTimelines,
     onChangeImage,
     handlerName,
     handShowNavbar,

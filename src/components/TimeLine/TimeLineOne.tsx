@@ -6,6 +6,7 @@ import { useAppContext } from "../../Context/AppContext";
 import SectionEditBoxWrapper from "../Common/SectionEditBoxWrapper";
 import SectionSettingWrapper from "../Common/SectionSettingWrapper";
 import EditingHook from "../../hook/EditingHook";
+import TimeLineHook from "../../hook/TimeLineHook";
 interface TimeLineOneInterface {
   item: SectionDoc;
 }
@@ -18,6 +19,7 @@ const TimeLineOne: React.FC<TimeLineOneInterface> = ({ item }) => {
     timeLines,
     changeEdit,
     onCancelEdit,
+    onChangeTimelines,
     onUpate,
     onDelete,
     handlerName,
@@ -25,9 +27,11 @@ const TimeLineOne: React.FC<TimeLineOneInterface> = ({ item }) => {
     handleSwapDir,
   } = EditingHook(item);
 
+  const { handleTitleText, handleBodyText } = TimeLineHook();
+
   const normalFormClasses = useMemo<string>(
     () =>
-      "text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark: dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+      "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark: dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer",
     []
   );
 
@@ -80,13 +84,66 @@ const TimeLineOne: React.FC<TimeLineOneInterface> = ({ item }) => {
                     <div className="flex justify-center">
                       <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
                         <div className="mb-2">
-                          <TitleText
-                            value={timeLine.title_text}
-                            color={color.primary}
-                          />
+                          {isEdit && (
+                            <div className="relative w-full animate__animated animate__fadeIn justify-start flex">
+                              <input
+                                value={timeLine.title_text}
+                                onChange={(e) =>
+                                  onChangeTimelines(
+                                    handleTitleText(
+                                      timeLines,
+                                      timeLine.id,
+                                      e.target.value
+                                    )
+                                  )
+                                }
+                                type="text"
+                                name="title"
+                                className={[normalFormClasses].join(" ")}
+                                placeholder=" "
+                                style={{
+                                  fontFamily: font.titleFamily,
+                                  fontSize: "1.2rem",
+                                  color: color.primary,
+                                }}
+                              />
+                            </div>
+                          )}
+
+                          {!isEdit && (
+                            <TitleText
+                              value={timeLine.title_text}
+                              color={color.primary}
+                            />
+                          )}
                         </div>
                         <div>
-                          <BodyText value={timeLine.body_text} />
+                          {isEdit && (
+                            <div className="relative w-full animate__animated animate__fadeIn justify-start flex">
+                              <input
+                                value={timeLine.body_text}
+                                onChange={(e) =>
+                                  onChangeTimelines(
+                                    handleBodyText(
+                                      timeLines,
+                                      timeLine.id,
+                                      e.target.value
+                                    )
+                                  )
+                                }
+                                type="text"
+                                name="title"
+                                className={[normalFormClasses].join(" ")}
+                                placeholder=" "
+                                style={{
+                                  fontFamily: font.bodyFamily,
+                                  fontSize: "1rem",
+                                }}
+                              />
+                            </div>
+                          )}
+
+                          {!isEdit && <BodyText value={timeLine.body_text} />}
                         </div>
                       </div>
                     </div>
