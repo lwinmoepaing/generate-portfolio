@@ -19,9 +19,9 @@ const CarouselOne: React.FC<CarouselOneInterface> = ({ item }) => {
   const {
     isEdit,
     carousels,
+    editName,
     changeEdit,
     onCancelEdit,
-    onChangeTimelines,
     onChangeCarousels,
     onUpate,
     onDelete,
@@ -48,6 +48,10 @@ const CarouselOne: React.FC<CarouselOneInterface> = ({ item }) => {
         onUpdate={onUpate}
         sectionItem={item}
       />
+
+      <div className="text-center my-2">
+        <TitleText value={editName} color={color.primary} />
+      </div>
 
       <div className={`w-full mx-auto `}>
         <Carousel className=" mx-4 pt-2">

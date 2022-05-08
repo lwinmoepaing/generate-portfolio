@@ -7,6 +7,7 @@ import { useState } from "react";
 import Navbar from "../src/components/Navbar/Navbar";
 import BaseContextModal from "../src/components/Modal/BaseContextModal";
 import SectionList from "../src/components/Section/SectionList";
+import Footer from "../src/components/Footer/Footer";
 
 const Home: NextPage = () => {
   const [compOpenModal, setOpenCompModal] = useState<boolean>(false);
@@ -30,7 +31,7 @@ const Home: NextPage = () => {
         <SectionList />
 
         <SpaceAddComponent onClick={() => setOpenCompModal(true)} />
-        
+
         {compOpenModal && (
           <ChooseCompModal onCloseModal={() => setOpenCompModal(false)} />
         )}
@@ -38,6 +39,8 @@ const Home: NextPage = () => {
         {baseFormModal && (
           <BaseContextModal onCloseModal={() => setBaseFormModal(false)} />
         )}
+
+        <Footer />
       </AppContextProvider>
     </div>
   );

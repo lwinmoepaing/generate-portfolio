@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 
 const sampleSelected: SectionDoc = {
   id: nanoid(), // Unique ID
-  type: "", // Header
+  type: "Carousel", // Header
   name: "", // HeaderOne
   comp_name: "",
 
@@ -46,7 +46,7 @@ const CarouselList: React.FC<CarouselListInterface> = ({
         id: nanoid(),
         type: "Carousel",
         comp_name: compName,
-        name: "Home",
+        name: "Latest Activity",
         side_image: {
           image_type: "svg",
           image_name: svgData.DeveloperOne,

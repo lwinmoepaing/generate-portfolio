@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { Component } from "react";
+import React, { Component, useCallback } from "react";
 import { useAppContext } from "../../Context/AppContext";
 import TitleText from "../Common/TitleText";
 
@@ -9,6 +9,16 @@ interface NavbarInterface {
 
 const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
   const { title, sections, color, editingSections } = useAppContext();
+
+  const scrollTo = useCallback((id: string) => {
+    const container = document.getElementById(id);
+    if (container?.offsetTop) {
+      window.scrollTo({
+        top: container.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  }, []);
 
   return (
     <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
@@ -24,7 +34,7 @@ const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
             <button
               type="button"
               onClick={onClickSetting}
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-3 py-1 text-center mr-3 md:mr-0"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-3 py-1 text-center mr-2"
               style={{
                 backgroundColor: color.primary,
               }}
@@ -32,7 +42,16 @@ const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
               <TitleText value={"Setting"} size="sm" color="#fff" />
             </button>
           )}
-          <button
+          {!editingSections && (
+            <button
+              type="button"
+              onClick={onClickSetting}
+              className="text-white bg-yellow-400 rounded-lg text-sm px-3 py-1 text-center mr-3 md:mr-0"
+            >
+              <TitleText value={"Export"} size="sm" color="#fff" />
+            </button>
+          )}
+          {/* <button
             data-collapse-toggle="mobile-menu-4"
             type="button"
             className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -64,7 +83,7 @@ const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
                 clipRule="evenodd"
               ></path>
             </svg>
-          </button>
+          </button> */}
         </div>
         <div
           className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
@@ -79,6 +98,7 @@ const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
                     href="#"
                     className="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
                     aria-current="page"
+                    onClick={() => scrollTo(item.id)}
                   >
                     <TitleText
                       value={item.name}

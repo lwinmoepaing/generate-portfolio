@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 
 const sampleSelected: SectionDoc = {
   id: nanoid(), // Unique ID
-  type: "", // Header
+  type: "TimeLine", // Header
   name: "", // HeaderOne
   comp_name: "",
 
@@ -44,7 +44,7 @@ const TimeLineList: React.FC<TimeLineInterface> = ({ list, onSelected }) => {
         id: nanoid(),
         type: "TimeLine",
         comp_name: compName,
-        name: "TimeLineOne",
+        name: "New TimeLine",
         side_image: {
           image_type: "svg",
           image_name: svgData.DeveloperOne,

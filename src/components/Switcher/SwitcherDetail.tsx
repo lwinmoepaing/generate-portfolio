@@ -19,6 +19,7 @@ const SwitcherDetail: React.FC<SwitcherDetailInterface> = ({
       className={`${
         editingSections === selectedComponent.id ? "z-20 relative" : ""
       } mb-4`}
+      id={`${selectedComponent.id}`}
     >
       {selectedComponent.type === "Header" &&
         selectedComponent.comp_name === "HeaderOne" && (
