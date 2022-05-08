@@ -4,6 +4,7 @@ import { ButtonDoc } from "../../model/AppContextType";
 import { ToastContainer, toast } from "react-toastify";
 import TitleText from "./TitleText";
 import ButtonEditModal from "../Modal/ButtonEditModal";
+import { nanoid } from "nanoid";
 
 interface ButtonListInterface {
   buttons: ButtonDoc[];
@@ -14,7 +15,7 @@ interface ButtonListInterface {
 
 const ButtonList: React.FC<ButtonListInterface> = ({
   buttons,
-  maxLength = 1,
+  maxLength = 3,
   isEdit,
   onChangeButtons,
 }) => {
@@ -33,18 +34,47 @@ const ButtonList: React.FC<ButtonListInterface> = ({
 
       if (item.action_type === "alert") {
         toast(item.alert_title, { position: "top-center", autoClose: 3000 });
-      } else {
-        if (item && item.url && window) {
-          window.open(item.url, "_blank")?.focus();
-        }
+        return;
+      }
+
+      if (item.action_type === "url" && item.url && window) {
+        window.open(item.url, "_blank")?.focus();
+        return;
+      }
+
+      if (item.action_type === "tel") {
+        const phBtn = document.getElementById(`phone_${item.id}`);
+        phBtn?.click();
       }
     },
     [isEdit]
   );
 
-  const onAddButtons = useCallback(() => {}, []);
+  const onAddButtons = useCallback(() => {
+    if (onChangeButtons) {
+      onChangeButtons([
+        ...buttons,
+        {
+          id: nanoid(),
+          name: "New Button",
+          type: "solid",
+          action_type: "alert",
+          alert_title: "New Button",
+          phone: "+959",
+          url: "https://",
+        },
+      ]);
+    }
+  }, [buttons, onChangeButtons]);
 
-  const onDeleteButtons = useCallback((btn: ButtonDoc) => {}, []);
+  const onDeleteButtons = useCallback(
+    (btn: ButtonDoc) => {
+      if (onChangeButtons) {
+        onChangeButtons(buttons.filter((b) => b.id !== btn.id));
+      }
+    },
+    [buttons, onChangeButtons]
+  );
 
   const onUpdateButton = useCallback(
     (btn: ButtonDoc) => {
@@ -62,28 +92,62 @@ const ButtonList: React.FC<ButtonListInterface> = ({
   );
 
   return (
-    <>
+    <div className="flex justify-center">
       {buttons.map((btn) => (
-        <button
-          key={btn.id}
-          type="button"
-          onClick={() => onClickButton(btn)}
-          className="relative text-white bg-blue-700 hover:bg-blue-800 focus:outline-none rounded-lg text-sm px-3 py-1 text-center mr-2"
-          style={{
-            backgroundColor:
-              btn.type === "solid" ? color.primary : "transparent",
-            border:
-              btn.type === "outlined" ? "1px solid " + color.primary : "0px",
-          }}
-        >
-          <TitleText
-            value={btn.name}
-            size="sm"
-            color={btn.type === "outlined" ? color.primary : '"#fff"'}
-          />
-        </button>
-      ))}
+        <>
+          <button
+            key={btn.id}
+            type="button"
+            onClick={() => onClickButton(btn)}
+            className="relative text-white bg-blue-700 hover:bg-blue-800 focus:outline-none rounded-lg text-sm px-3 py-1 text-center mr-2"
+            style={{
+              backgroundColor:
+                btn.type === "solid" ? color.primary : "transparent",
+              border:
+                btn.type === "outlined" ? "1px solid " + color.primary : "0px",
+            }}
+          >
+            <TitleText
+              value={btn.name}
+              size="sm"
+              color={btn.type === "outlined" ? color.primary : "#fff"}
+            />
 
+            {btn.action_type === "tel" && (
+              <a
+                href={`tel:${btn.phone}`}
+                className="hidden"
+                id={`phone_${btn.id}`}
+              >
+                -
+              </a>
+            )}
+          </button>
+        </>
+      ))}
+      {buttons.length < maxLength && isEdit && (
+        <div
+          onClick={onAddButtons}
+          className={
+            "h-8 w-8 bg-blue-500 rounded-full flex items-center justify-center animate__animated animate__fadeInRight cursor-pointer"
+          }
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+        </div>
+      )}
       {openModal && selectedItem && (
         <ButtonEditModal
           button={selectedItem}
@@ -93,7 +157,7 @@ const ButtonList: React.FC<ButtonListInterface> = ({
         />
       )}
       <ToastContainer />
-    </>
+    </div>
   );
 };
 

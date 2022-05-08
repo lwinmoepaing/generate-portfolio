@@ -56,7 +56,7 @@ const HeaderList: React.FC<HeaderListInterface> = ({ list, onSelected }) => {
             type: "solid",
             action_type: "alert",
             alert_title: "Testing Alert Message",
-            alert_body: "",
+            phone: "",
             url: "",
           },
           {
@@ -65,7 +65,7 @@ const HeaderList: React.FC<HeaderListInterface> = ({ list, onSelected }) => {
             type: "outlined",
             action_type: "url",
             alert_title: "Alert Title",
-            alert_body: "",
+            phone: "",
             url: "https://www.google.com.mm",
           },
         ],

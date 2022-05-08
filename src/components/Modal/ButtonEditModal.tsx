@@ -1,6 +1,5 @@
 import { nanoid } from "nanoid";
 import React, { useCallback, useMemo, useState } from "react";
-import { useAppContext } from "../../Context/AppContext";
 import { ButtonDoc } from "../../model/AppContextType";
 
 interface ModalInterface {
@@ -20,12 +19,22 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
   const [messageTitle, setMessageTitle] = useState<string>(
     button.alert_title || ""
   );
+  const [phoneText, setPhoneText] = useState<string>(button.phone || "");
   const [url, setUrl] = useState<string>(button.url || "");
-  const [actionType, setActionType] = useState<"url" | "alert">(
+  const [actionType, setActionType] = useState<"url" | "alert" | "tel">(
     button.action_type
   );
+  const [buttonType, setButtonType] = useState<"solid" | "outlined">(
+    button.type
+  );
   const [isTouched, setIsTouched] = useState<boolean>(false);
-  const [radio1, radio2] = [nanoid(), nanoid()];
+  const [radio1, radio2, radio3, radio4, radio5] = [
+    nanoid(),
+    nanoid(),
+    nanoid(),
+    nanoid(),
+    nanoid(),
+  ];
 
   const isErrorTitle = useMemo<boolean>(() => {
     return !editTitle?.trim();
@@ -38,6 +47,10 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
   const isErrorUrl = useMemo<boolean>(() => {
     return !url?.trim();
   }, [url]);
+
+  const isErrorPhone = useMemo<boolean>(() => {
+    return !phoneText?.trim();
+  }, [phoneText]);
 
   const [classes, setClasses] = useState<string[]>(
     "flex-1 p-4 m-4 max-w-xl shadow-xl  animate__animated animate__fadeInUp".split(
@@ -95,8 +108,16 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
     setUrl(e.target.value);
   }, []);
 
+  const handlerPhoneText = useCallback((e: any) => {
+    setPhoneText(e.target.value);
+  }, []);
+
   const handlerActionType = useCallback((e: any) => {
     setActionType(e.target.value);
+  }, []);
+
+  const handleButtonType = useCallback((e: any) => {
+    setButtonType(e.target.value);
   }, []);
 
   const onSubmitForm = useCallback(() => {
@@ -114,6 +135,10 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
       return;
     }
 
+    if (actionType === "tel" && !phoneText?.trim()) {
+      return;
+    }
+
     if (onUpdateButton) {
       onUpdateButton({
         ...button,
@@ -121,6 +146,8 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
         alert_title: messageTitle,
         action_type: actionType,
         url: url,
+        phone: phoneText,
+        type: buttonType,
       });
     }
 
@@ -130,9 +157,11 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
     actionType,
     messageTitle,
     url,
+    phoneText,
     onUpdateButton,
     onCloseModalHandler,
     button,
+    buttonType,
   ]);
 
   const onDeleteForm = useCallback(() => {
@@ -190,7 +219,44 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
                 )}
               </div>
 
-              <div className="flex justify-center items-start my-4">
+              <div className="flex items-start my-4">
+                <div className="form-check form-check-inline mr-3">
+                  <input
+                    className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                    type="radio"
+                    name="buttonTypeRadios"
+                    id={radio4}
+                    value="solid"
+                    defaultChecked={buttonType === "solid"}
+                    onChange={handleButtonType}
+                  />
+                  <label
+                    className="form-check-label inline-block text-gray-800"
+                    htmlFor={radio4}
+                  >
+                    Solid
+                  </label>
+                </div>
+                <div className="form-check form-check-inline mr-3">
+                  <input
+                    className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                    type="radio"
+                    name="buttonTypeRadios"
+                    id={radio5}
+                    value="outlined"
+                    defaultChecked={buttonType === "outlined"}
+                    onChange={handleButtonType}
+                  />
+                  <label
+                    className="form-check-label inline-block text-gray-800"
+                    htmlFor={radio5}
+                  >
+                    Outlined
+                  </label>
+                </div>
+              </div>
+
+              <div className="flex items-start my-4">
                 <div className="form-check form-check-inline mr-3">
                   <input
                     className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
@@ -205,10 +271,10 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
                     className="form-check-label inline-block text-gray-800"
                     htmlFor={radio1}
                   >
-                    Alert Message
+                    Alert
                   </label>
                 </div>
-                <div className="form-check form-check-inline">
+                <div className="form-check form-check-inline mr-3">
                   <input
                     className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                     type="radio"
@@ -222,7 +288,24 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
                     className="form-check-label inline-block text-gray-800"
                     htmlFor={radio2}
                   >
-                    Url Message
+                    Url
+                  </label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id={radio3}
+                    value="tel"
+                    defaultChecked={actionType === "tel"}
+                    onChange={handlerActionType}
+                  />
+                  <label
+                    className="form-check-label inline-block text-gray-800"
+                    htmlFor={radio3}
+                  >
+                    Phone
                   </label>
                 </div>
               </div>
@@ -246,7 +329,7 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
                     htmlFor="title"
                     className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   >
-                    Message
+                    Alert Message
                   </label>
                   {isTouched && isErrorMessageTitle && (
                     <p className="mt-1 text-sm text-red-600 dark:text-red-500">
@@ -280,6 +363,35 @@ const ButtonEditModal: React.FC<ModalInterface> = ({
                   {isTouched && isErrorUrl && (
                     <p className="mt-1 text-sm text-red-600 dark:text-red-500">
                       Url is Required
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {actionType === "tel" && (
+                <div className="relative flex flex-col items-start z-0 w-full mb-1 group">
+                  <input
+                    value={phoneText}
+                    onChange={handlerPhoneText}
+                    type="text"
+                    name="title"
+                    className={[
+                      normalFormClasses,
+                      isTouched && isErrorPhone
+                        ? "border-red-600 focus:border-red-600"
+                        : "",
+                    ].join(" ")}
+                    placeholder=" "
+                  />
+                  <label
+                    htmlFor="title"
+                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  >
+                    Tel (+959xxxxxxxxx)
+                  </label>
+                  {isTouched && isErrorPhone && (
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-500">
+                      Phone number is Required
                     </p>
                   )}
                 </div>

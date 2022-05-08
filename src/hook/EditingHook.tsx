@@ -15,7 +15,7 @@ const EditingHook = (item: SectionDoc) => {
     item.type_effect_text?.join(",") || ""
   );
   const [editBodyText, setEditBodyText] = useState<string>(item.body_text);
-  const [editName, seteditName] = useState<string>(item.name);
+  const [editName, setEditName] = useState<string>(item.name);
   const [editShowNavbar, setEditShowNavbar] = useState<boolean>(
     item.show_nav_bar
   );
@@ -36,6 +36,11 @@ const EditingHook = (item: SectionDoc) => {
     setIsEdit(false);
     setEditTitle(item.title_text);
     setEditTypeEffect(item.type_effect_text?.join(",") || "");
+    setEditBodyText(item.body_text);
+    setButtons(item.buttons);
+    setEditName(item.name);
+    setEditShowNavbar(item.show_nav_bar);
+    setEditSwapDir(item.swap_direction);
     if (item.side_image) {
       setSideImage(item.side_image);
     }
@@ -116,7 +121,7 @@ const EditingHook = (item: SectionDoc) => {
   }, []);
 
   const handlerName = useCallback((e: string) => {
-    seteditName(e);
+    setEditName(e);
   }, []);
 
   const handShowNavbar = useCallback((e: boolean) => {

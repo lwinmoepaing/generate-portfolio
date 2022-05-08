@@ -35,9 +35,9 @@ export interface ButtonDoc {
   name: string;
   icon_name?: string;
   type: "outlined" | "solid";
-  action_type: "url" | "alert";
+  action_type: "url" | "alert" | "tel";
   alert_title?: string;
-  alert_body?: string;
+  phone?: string;
   url: string;
 }
 export interface SectionDoc {
