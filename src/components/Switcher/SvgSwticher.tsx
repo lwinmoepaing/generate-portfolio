@@ -54,12 +54,18 @@ const SvgSwitcher: React.FC<SvgSwitcherInterface> = ({
   return (
     <>
       {selectedComponent === svgData.DeveloperOne && (
-        <div style={{ width: "100%", height: "100%" }}>
+        <div
+          style={{ width: "100%", height: "100%" }}
+          className="flex flex-col justify-center"
+        >
           <DeveloperOneSVG />
         </div>
       )}
       {selectedComponent === svgData.ReadingOne && (
-        <div style={{ width: "100%", height: "100%" }}>
+        <div
+          style={{ width: "100%", height: "100%" }}
+          className="flex flex-col justify-center"
+        >
           <ReadingOneSVG />
         </div>
       )}
