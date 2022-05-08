@@ -94,36 +94,34 @@ const ButtonList: React.FC<ButtonListInterface> = ({
   return (
     <div className="flex justify-center">
       {buttons.map((btn) => (
-        <>
-          <button
-            key={btn.id}
-            type="button"
-            onClick={() => onClickButton(btn)}
-            className="relative text-white bg-blue-700 hover:bg-blue-800 focus:outline-none rounded-lg text-sm px-3 py-1 text-center mr-2"
-            style={{
-              backgroundColor:
-                btn.type === "solid" ? color.primary : "transparent",
-              border:
-                btn.type === "outlined" ? "1px solid " + color.primary : "0px",
-            }}
-          >
-            <TitleText
-              value={btn.name}
-              size="sm"
-              color={btn.type === "outlined" ? color.primary : "#fff"}
-            />
+        <button
+          key={btn.id}
+          type="button"
+          onClick={() => onClickButton(btn)}
+          className="relative text-white bg-blue-700 hover:bg-blue-800 focus:outline-none rounded-lg text-sm px-3 py-1 text-center mr-2"
+          style={{
+            backgroundColor:
+              btn.type === "solid" ? color.primary : "transparent",
+            border:
+              btn.type === "outlined" ? "1px solid " + color.primary : "0px",
+          }}
+        >
+          <TitleText
+            value={btn.name}
+            size="sm"
+            color={btn.type === "outlined" ? color.primary : "#fff"}
+          />
 
-            {btn.action_type === "tel" && (
-              <a
-                href={`tel:${btn.phone}`}
-                className="hidden"
-                id={`phone_${btn.id}`}
-              >
-                -
-              </a>
-            )}
-          </button>
-        </>
+          {btn.action_type === "tel" && (
+            <a
+              href={`tel:${btn.phone}`}
+              className="hidden"
+              id={`phone_${btn.id}`}
+            >
+              -
+            </a>
+          )}
+        </button>
       ))}
       {buttons.length < maxLength && isEdit && (
         <div

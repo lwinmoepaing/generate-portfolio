@@ -30,6 +30,13 @@ export interface SideImageDoc {
   text?: TextDoc;
 }
 
+export interface TimeLineDoc {
+  id: string;
+  icon_name: string;
+  title_text: string;
+  body_text: string;
+}
+
 export interface ButtonDoc {
   id: string;
   name: string;
@@ -54,6 +61,7 @@ export interface SectionDoc {
   type_effect_text?: string[];
   bg_image?: BgImageDoc;
   side_image?: SideImageDoc;
+  time_lines?: TimeLineDoc[];
   buttons: ButtonDoc[];
 }
 

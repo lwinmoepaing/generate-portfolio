@@ -1,6 +1,7 @@
 import React from "react";
 import { useAppContext } from "../../Context/AppContext";
 import HeaderList from "../Headers/HeaderList";
+import TimeLineList from "../TimeLine/TimeLineList";
 
 interface selectedComponentInterface {
   id: string;
@@ -20,6 +21,10 @@ const Switcher: React.FC<SwitcherInterface> = ({
     <>
       {selectedComponent.id === "Header" && (
         <HeaderList {...selectedComponent} onSelected={onSelected} />
+      )}
+
+      {selectedComponent.id === "TimeLine" && (
+        <TimeLineList {...selectedComponent} onSelected={onSelected} />
       )}
     </>
   );

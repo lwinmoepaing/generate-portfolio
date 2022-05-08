@@ -1,6 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { useAppContext } from "../Context/AppContext";
-import { ButtonDoc, SectionDoc, SideImageDoc } from "../model/AppContextType";
+import {
+  ButtonDoc,
+  SectionDoc,
+  SideImageDoc,
+  TimeLineDoc,
+} from "../model/AppContextType";
 
 const EditingHook = (item: SectionDoc) => {
   const {
@@ -24,6 +29,9 @@ const EditingHook = (item: SectionDoc) => {
     item.side_image || { image_type: "svg", image_name: "", url: "" }
   );
   const [buttons, setButtons] = useState<ButtonDoc[]>(item.buttons);
+  const [timeLines, setTimeLines] = useState<TimeLineDoc[]>(
+    item?.time_lines || []
+  );
 
   const changeEdit = useCallback(() => {
     setIsEdit(true);
@@ -41,6 +49,7 @@ const EditingHook = (item: SectionDoc) => {
     setEditName(item.name);
     setEditShowNavbar(item.show_nav_bar);
     setEditSwapDir(item.swap_direction);
+    setTimeLines(item.time_lines || []);
     if (item.side_image) {
       setSideImage(item.side_image);
     }
@@ -146,6 +155,7 @@ const EditingHook = (item: SectionDoc) => {
     editSwapDir,
     sideImg,
     buttons,
+    timeLines,
     changeEdit,
     onCancelEdit,
     handlerTitle,

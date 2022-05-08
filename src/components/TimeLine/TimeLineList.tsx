@@ -20,14 +20,14 @@ const sampleSelected: SectionDoc = {
   buttons: [],
 };
 
-interface HeaderListInterface {
+interface TimeLineInterface {
   id: string;
   name: string;
   list: string[];
   onSelected: () => void | any;
 }
 
-const HeaderList: React.FC<HeaderListInterface> = ({ list, onSelected }) => {
+const TimeLineList: React.FC<TimeLineInterface> = ({ list, onSelected }) => {
   const { onSelectSection } = useAppContext();
 
   const [classes, setClasses] = useState<string[]>(
@@ -38,35 +38,31 @@ const HeaderList: React.FC<HeaderListInterface> = ({ list, onSelected }) => {
 
   const onSelectedHandler = useCallback(
     (compName: string) => {
+      console.log(compName);
       onSelectSection({
         ...sampleSelected,
         id: nanoid(),
-        type: "Header",
+        type: "TimeLine",
         comp_name: compName,
-        name: "Home",
+        name: "TimeLineOne",
         side_image: {
           image_type: "svg",
           image_name: svgData.DeveloperOne,
           url: "",
         },
-        buttons: [
+        buttons: [],
+        time_lines: [
           {
             id: nanoid(),
-            name: "Show Alert",
-            type: "solid",
-            action_type: "alert",
-            alert_title: "Testing Alert Message",
-            phone: "",
-            url: "",
+            icon_name: "",
+            title_text: "TimeLine 1",
+            body_text: "Hello 2022 bar nyar",
           },
           {
             id: nanoid(),
-            name: "Go Google",
-            type: "outlined",
-            action_type: "url",
-            alert_title: "Alert Title",
-            phone: "",
-            url: "https://www.google.com.mm",
+            icon_name: "",
+            title_text: "TimeLine 2",
+            body_text: "Hello 2022 bar nyar",
           },
         ],
       });
@@ -98,4 +94,4 @@ const HeaderList: React.FC<HeaderListInterface> = ({ list, onSelected }) => {
   );
 };
 
-export default HeaderList;
+export default TimeLineList;
