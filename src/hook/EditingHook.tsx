@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useAppContext } from "../Context/AppContext";
 import {
   ButtonDoc,
+  CarouselDoc,
   SectionDoc,
   SideImageDoc,
   TimeLineDoc,
@@ -32,6 +33,9 @@ const EditingHook = (item: SectionDoc) => {
   const [timeLines, setTimeLines] = useState<TimeLineDoc[]>(
     item?.time_lines || []
   );
+  const [carousels, setCarousels] = useState<CarouselDoc[]>(
+    item?.carousels || []
+  );
 
   const changeEdit = useCallback(() => {
     setIsEdit(true);
@@ -50,6 +54,7 @@ const EditingHook = (item: SectionDoc) => {
     setEditShowNavbar(item.show_nav_bar);
     setEditSwapDir(item.swap_direction);
     setTimeLines(item.time_lines || []);
+    setCarousels(item.carousels || []);
     if (item.side_image) {
       setSideImage(item.side_image);
     }
@@ -75,8 +80,32 @@ const EditingHook = (item: SectionDoc) => {
       alert("Need Navbar Title is Required");
       return;
     }
+
+    if (
+      onDeleteSection &&
+      item.type === "Carousel" &&
+      carousels &&
+      carousels?.length <= 0
+    ) {
+      setIsEdit(false);
+      onDeleteSection(item);
+      return;
+    }
+
+    if (
+      onDeleteSection &&
+      item.type === "TimeLine" &&
+      timeLines &&
+      timeLines?.length <= 0
+    ) {
+      console.log("Is Inside Delete");
+      setIsEdit(false);
+      onDeleteSection(item);
+      return;
+    }
+
     if (onUpdateSection && item) {
-      const updateItem = {
+      const updateItem: SectionDoc = {
         ...item,
         name: editName,
         show_nav_bar: editShowNavbar,
@@ -86,13 +115,17 @@ const EditingHook = (item: SectionDoc) => {
         type_effect_text: editTypeEffect.split(","),
         side_image: sideImg,
         buttons: buttons,
-        timeLines: timeLines,
+        time_lines: timeLines,
+        carousels: carousels,
       };
 
       onUpdateSection(updateItem);
+      setIsEdit(false);
     }
+
     setIsEdit(false);
   }, [
+    carousels,
     editName,
     onUpdateSection,
     item,
@@ -141,6 +174,10 @@ const EditingHook = (item: SectionDoc) => {
     setTimeLines(tls);
   }, []);
 
+  const onChangeCarousels = useCallback((cls: CarouselDoc[]) => {
+    setCarousels(cls);
+  }, []);
+
   return {
     isEdit,
     editTitle,
@@ -152,6 +189,7 @@ const EditingHook = (item: SectionDoc) => {
     sideImg,
     buttons,
     timeLines,
+    carousels,
     changeEdit,
     onCancelEdit,
     handlerTitle,
@@ -162,6 +200,7 @@ const EditingHook = (item: SectionDoc) => {
     onChangeSVG,
     onChangeButtons,
     onChangeTimelines,
+    onChangeCarousels,
     onChangeImage,
     handlerName,
     handShowNavbar,

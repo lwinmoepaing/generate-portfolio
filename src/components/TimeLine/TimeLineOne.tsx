@@ -15,6 +15,7 @@ const TimeLineOne: React.FC<TimeLineOneInterface> = ({ item }) => {
   const { font, color } = useAppContext();
   const {
     isEdit,
+    editName,
     editSwapDir,
     timeLines,
     changeEdit,
@@ -48,7 +49,7 @@ const TimeLineOne: React.FC<TimeLineOneInterface> = ({ item }) => {
       />
 
       <div className="text-center">
-        <TitleText value={item.name} color={color.primary} />
+        <TitleText value={editName} color={color.primary} />
       </div>
 
       <div className={`flex w-full mx-auto `} style={{ maxWidth: 900 }}>
@@ -185,7 +186,7 @@ const TimeLineOne: React.FC<TimeLineOneInterface> = ({ item }) => {
       </div>
 
       {isEdit && (
-        <div className="flex flex-row justify-center items-center">
+        <div className="flex flex-row justify-center items-center mb-2">
           <div
             onClick={() => onChangeTimelines(createNewTimeLine(timeLines))}
             className={

@@ -9,7 +9,7 @@ interface SpaceAddComponentInterface {
 const SpaceAddComponent: React.FC<SpaceAddComponentInterface> = ({
   onClick,
 }) => {
-  const { color } = useAppContext();
+  const { color, editingSections } = useAppContext();
 
   const [classes, setClasses] = useState<string[]>([
     "container mx-auto",
@@ -37,7 +37,7 @@ const SpaceAddComponent: React.FC<SpaceAddComponentInterface> = ({
     }, 600);
   }, [loading, onClick]);
 
-  return (
+  return !editingSections ? (
     <div
       className={classes.join(" ")}
       onClick={onClickHandler}
@@ -51,7 +51,7 @@ const SpaceAddComponent: React.FC<SpaceAddComponentInterface> = ({
         }}
       ></div>
     </div>
-  );
+  ) : null;
 };
 
 export default SpaceAddComponent;

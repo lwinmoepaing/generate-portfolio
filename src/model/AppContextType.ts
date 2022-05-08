@@ -23,6 +23,13 @@ export interface BgImageDoc {
   url: string;
 }
 
+export interface CarouselDoc {
+  id: string;
+  image_name: string;
+  image_type: "normal";
+  title_text: string;
+  body_text: string;
+}
 export interface SideImageDoc {
   image_type: "normal" | "svg";
   image_name: string;
@@ -49,7 +56,7 @@ export interface ButtonDoc {
 }
 export interface SectionDoc {
   id: string; // Unique ID
-  type: string; // Header
+  type: "Header" | "Carousel" | "TimeLine" | "Contact Us"; // Header
   name: string; // Nav Name -> Home, About
   comp_name: string; // HeaderOne, HeaderTwo
 
@@ -62,6 +69,7 @@ export interface SectionDoc {
   bg_image?: BgImageDoc;
   side_image?: SideImageDoc;
   time_lines?: TimeLineDoc[];
+  carousels?: CarouselDoc[];
   buttons: ButtonDoc[];
 }
 

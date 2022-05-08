@@ -29,7 +29,7 @@ const TimeLineHook = () => {
     if (index !== -1) {
       updateTimeLine[index].title_text = title;
     }
-    return updateTimeLine;
+    return [...updateTimeLine];
   };
 
   const handleBodyText = (
@@ -42,7 +42,7 @@ const TimeLineHook = () => {
     if (index !== -1) {
       updateTimeLine[index].body_text = title;
     }
-    return updateTimeLine;
+    return [...updateTimeLine];
   };
 
   const onUpTimeLineItem = (
@@ -57,7 +57,7 @@ const TimeLineHook = () => {
       updateTimeLine[index] = upData;
     }
 
-    return updateTimeLine;
+    return [...updateTimeLine];
   };
 
   return {
