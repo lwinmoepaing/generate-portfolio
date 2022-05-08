@@ -3,7 +3,12 @@ import { useAppContext } from "../Context/AppContext";
 import { SectionDoc, SideImageDoc } from "../model/AppContextType";
 
 const EditingHook = (item: SectionDoc) => {
-  const { onDeleteSection, onUpdateSection } = useAppContext();
+  const {
+    onDeleteSection,
+    onUpdateSection,
+    setClearSection,
+    setEditingSection,
+  } = useAppContext();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [editTitle, setEditTitle] = useState<string>(item.title_text);
   const [editTypeEffect, setEditTypeEffect] = useState<string>(
@@ -19,7 +24,12 @@ const EditingHook = (item: SectionDoc) => {
     item.side_image || { image_type: "svg", image_name: "", url: "" }
   );
 
-  const changeEdit = useCallback(() => setIsEdit(true), []);
+  const changeEdit = useCallback(() => {
+    setIsEdit(true);
+    if (setEditingSection) {
+      setEditingSection(item);
+    }
+  }, [item, setEditingSection]);
 
   const onCancelEdit = useCallback(() => {
     setIsEdit(false);
@@ -28,7 +38,10 @@ const EditingHook = (item: SectionDoc) => {
     if (item.side_image) {
       setSideImage(item.side_image);
     }
-  }, [item]);
+    if (setClearSection) {
+      setClearSection();
+    }
+  }, [item, setClearSection]);
 
   const handlerTitle = useCallback((e: any) => {
     setEditTitle(e.target.value);

@@ -33,7 +33,6 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
   }, []);
 
   const setColor = React.useCallback((color: ColorDoc) => {
-    console.log("Inside Setting Color");
     setState((prev) => {
       let returnData = { ...prev, color };
       localStorage.setItem("lwinStorage", JSON.stringify(returnData));
@@ -68,7 +67,11 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
         updateSections[indexOfSection] = section;
       }
 
-      let returnData = { ...prev, sections: updateSections };
+      let returnData = {
+        ...prev,
+        sections: updateSections,
+        editingSections: null,
+      };
 
       localStorage.setItem("lwinStorage", JSON.stringify(returnData));
 
@@ -81,8 +84,35 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
       const returnData = {
         ...prev,
         sections: prev.sections.filter((sect) => sect.id !== section.id),
+        editingSections: null,
       };
-      
+
+      localStorage.setItem("lwinStorage", JSON.stringify(returnData));
+
+      return returnData;
+    });
+  }, []);
+
+  const setEditingSection = React.useCallback((section: SectionDoc) => {
+    setState((prev) => {
+      const returnData = {
+        ...prev,
+        editingSections: section.id,
+      };
+
+      localStorage.setItem("lwinStorage", JSON.stringify(returnData));
+
+      return returnData;
+    });
+  }, []);
+
+  const setClearSection = React.useCallback(() => {
+    setState((prev) => {
+      const returnData = {
+        ...prev,
+        editingSections: null,
+      };
+
       localStorage.setItem("lwinStorage", JSON.stringify(returnData));
 
       return returnData;
@@ -99,6 +129,8 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
         onSelectSection,
         onUpdateSection,
         onDeleteSection,
+        setEditingSection,
+        setClearSection,
       }}
     >
       {children}

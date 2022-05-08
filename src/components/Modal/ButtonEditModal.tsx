@@ -4,14 +4,18 @@ import { ChromePicker } from "react-color";
 import { ButtonDoc } from "../../model/AppContextType";
 
 interface ModalInterface {
+  onUpdateButton: (item: ButtonDoc) => void | any;
   onCloseModal: () => void | any;
   button: ButtonDoc;
 }
 
-const ButtonEditModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
-  const { title, setTitle, color, setColor } = useAppContext();
-  const [editTitle, setEditTitle] = useState<string>(title);
-  const [primaryColor, setPrimaryColor] = useState<string>(color.primary);
+const ButtonEditModal: React.FC<ModalInterface> = ({
+  onCloseModal,
+  onUpdateButton,
+  button,
+}) => {
+  const { color, setColor } = useAppContext();
+  const [editTitle, setEditTitle] = useState<string>(button.name);
   const [isTouched, setIsTouched] = useState<boolean>(false);
 
   const isErrorTitle = useMemo<boolean>(() => {
@@ -73,24 +77,20 @@ const ButtonEditModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
       return;
     }
 
-    if (setTitle) {
-      setTitle(editTitle);
-    }
-
-    if (setColor && primaryColor) {
-      setColor({
-        ...color,
-        primary: primaryColor,
+    if (onUpdateButton) {
+      onUpdateButton({
+        ...button,
+        name: editTitle,
       });
     }
 
     onCloseModalHandler();
-  }, [editTitle, setTitle, setColor, primaryColor, onCloseModalHandler, color]);
+  }, [editTitle, onUpdateButton, onCloseModalHandler, button]);
 
   return (
     <>
       <div
-        className="relative z-10 animate__animated animate__fadeIn"
+        className="absolute z-20 animate__animated animate__fadeIn"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
@@ -105,7 +105,7 @@ const ButtonEditModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
             {/* Form Here */}
 
             <form className={classes.join(" ")}>
-              <div className="relative z-0 w-full mb-6 group">
+              <div className="z-0 w-full mb-6 group">
                 <input
                   value={editTitle}
                   onChange={handlerTitle}
@@ -131,14 +131,6 @@ const ButtonEditModal: React.FC<ModalInterface> = ({ onCloseModal }) => {
                     Title is not valid
                   </p>
                 )}
-              </div>
-
-              <div className="relative z-0 w-full mb-6 group">
-                <ChromePicker
-                  color={primaryColor}
-                  onChangeComplete={(str) => setPrimaryColor(str.hex)}
-                  className="mx-auto"
-                />
               </div>
 
               <div className="flex justify-between">

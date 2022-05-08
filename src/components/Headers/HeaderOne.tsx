@@ -16,7 +16,7 @@ interface HeaderOneInterface {
 }
 
 const HeaderOne: React.FC<HeaderOneInterface> = ({ item }) => {
-  const { onDeleteSection, font, onUpdateSection, color } = useAppContext();
+  const { font, color } = useAppContext();
   const {
     isEdit,
     editTitle,
@@ -51,6 +51,7 @@ const HeaderOne: React.FC<HeaderOneInterface> = ({ item }) => {
         onCancelEdit={onCancelEdit}
         onDelete={onDelete}
         onUpdate={onUpate}
+        sectionItem={item}
       />
 
       <div
@@ -133,7 +134,11 @@ const HeaderOne: React.FC<HeaderOneInterface> = ({ item }) => {
             )}
           </div>
           <div className="mt-2 text-center w-full">
-            <ButtonList isEdit={isEdit} buttons={item.buttons} />
+            <ButtonList
+              isEdit={isEdit}
+              buttons={item.buttons}
+              onChangeButtons={() => {}}
+            />
           </div>
         </div>
         <div className="w-full sm:w-1/2 ">

@@ -62,11 +62,14 @@ export interface AppContextInterface {
   font: FontDoc;
   color: ColorDoc;
   sections: SectionDoc[];
+  editingSections: string | null;
 
   setFont?: (font: FontDoc) => void | any;
   setColor?: (color: ColorDoc) => void | any;
   setTitle?: (title: string) => void | any;
+  setEditingSection?: (section: SectionDoc) => void | any;
   onUpdateSection?: (section: SectionDoc) => void | any;
   onDeleteSection?: (section: SectionDoc) => void | any;
   onSelectSection: (section: SectionDoc) => void | any;
+  setClearSection?: () => void | any;
 }

@@ -1,31 +1,52 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useAppContext } from "../../Context/AppContext";
 import { ButtonDoc } from "../../model/AppContextType";
 import { ToastContainer, toast } from "react-toastify";
 import TitleText from "./TitleText";
+import ButtonEditModal from "../Modal/ButtonEditModal";
 
 interface ButtonListInterface {
   buttons: ButtonDoc[];
   maxLength?: number;
   isEdit: boolean;
+  onChangeButtons: (buttons: ButtonDoc[]) => void | any;
 }
 
 const ButtonList: React.FC<ButtonListInterface> = ({
   buttons,
   maxLength = 1,
   isEdit,
+  onChangeButtons,
 }) => {
   const { color } = useAppContext();
 
-  const onClickButton = useCallback((item: ButtonDoc) => {
-    if (item.action_type === "alert") {
-      toast(item.alert_title, { position: "top-center", autoClose: 3000 });
-    } else {
-      if (item && item.url && window) {
-        window.open(item.url, "_blank")?.focus();
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = useState<null | ButtonDoc>(null);
+
+  const onClickButton = useCallback(
+    (item: ButtonDoc) => {
+      if (isEdit) {
+        setSelectedItem(item);
+        setOpenModal(true);
+        return;
       }
-    }
-  }, []);
+
+      if (item.action_type === "alert") {
+        toast(item.alert_title, { position: "top-center", autoClose: 3000 });
+      } else {
+        if (item && item.url && window) {
+          window.open(item.url, "_blank")?.focus();
+        }
+      }
+    },
+    [isEdit]
+  );
+
+  const onAddButtons = useCallback(() => {}, []);
+
+  const onDeleteButtons = useCallback(() => {}, []);
+
+  const onUpdateButton = useCallback((btn: ButtonDoc) => {}, []);
 
   return (
     <>
@@ -49,6 +70,15 @@ const ButtonList: React.FC<ButtonListInterface> = ({
           />
         </button>
       ))}
+
+      {JSON.stringify(openModal && selectedItem)}
+      {openModal && selectedItem && (
+        <ButtonEditModal
+          button={selectedItem}
+          onUpdateButton={onUpdateButton}
+          onCloseModal={() => setOpenModal(false)}
+        />
+      )}
       <ToastContainer />
     </>
   );
