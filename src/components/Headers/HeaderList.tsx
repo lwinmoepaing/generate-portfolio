@@ -17,8 +17,6 @@ const sampleSelected: SectionDoc = {
   body_text:
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque iusto, ex reprehenderit praesentium ducimus ",
   type_effect_text: ["Testing", "Hello"],
-  // bg_image?: BgImageDoc,
-  // side_image?: SideImageDoc,
   buttons: [],
 };
 
@@ -51,6 +49,26 @@ const HeaderList: React.FC<HeaderListInterface> = ({ list, onSelected }) => {
           image_name: svgData.DeveloperOne,
           url: "",
         },
+        buttons: [
+          {
+            id: nanoid(),
+            name: "Show Alert",
+            type: "solid",
+            action_type: "alert",
+            alert_title: "Testing Alert Message",
+            alert_body: "",
+            url: "",
+          },
+          {
+            id: nanoid(),
+            name: "Go Google",
+            type: "outlined",
+            action_type: "url",
+            alert_title: "Alert Title",
+            alert_body: "",
+            url: "https://www.google.com.mm",
+          },
+        ],
       });
       if (onSelected) {
         onSelected();

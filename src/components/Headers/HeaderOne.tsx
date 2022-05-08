@@ -10,6 +10,7 @@ import SvgSwitcher from "../Switcher/SvgSwticher";
 import ImageUpload from "../Common/ImageUpload";
 import SectionSettingWrapper from "../Common/SectionSettingWrapper";
 import EditingHook from "../../hook/EditingHook";
+import ButtonList from "../Common/ButtonList";
 interface HeaderOneInterface {
   item: SectionDoc;
 }
@@ -130,6 +131,9 @@ const HeaderOne: React.FC<HeaderOneInterface> = ({ item }) => {
                 />
               </div>
             )}
+          </div>
+          <div className="mt-2 text-center w-full">
+            <ButtonList isEdit={isEdit} buttons={item.buttons} />
           </div>
         </div>
         <div className="w-full sm:w-1/2 ">

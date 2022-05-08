@@ -34,6 +34,7 @@ export interface ButtonDoc {
   id: string;
   name: string;
   icon_name?: string;
+  type: "outlined" | "solid";
   action_type: "url" | "alert";
   alert_title?: string;
   alert_body?: string;
