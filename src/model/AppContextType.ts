@@ -78,6 +78,7 @@ export interface AppContextInterface {
   font: FontDoc;
   color: ColorDoc;
   sections: SectionDoc[];
+  is_exporting: boolean;
   editingSections: string | null;
 
   setFont?: (font: FontDoc) => void | any;
@@ -87,5 +88,6 @@ export interface AppContextInterface {
   onUpdateSection?: (section: SectionDoc) => void | any;
   onDeleteSection?: (section: SectionDoc) => void | any;
   onSelectSection: (section: SectionDoc) => void | any;
+  onExporting?: () => void | any;
   setClearSection?: () => void | any;
 }

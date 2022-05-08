@@ -13,10 +13,5 @@
     "id": "Carousel",
     "name": "Carousel",
     "list": ["CarouselOne"]
-  },
-  {
-    "id": "Contact Us",
-    "name": "Contact Us",
-    "list": ["Contact"]
   }
 ]

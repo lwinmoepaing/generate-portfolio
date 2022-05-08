@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 
 const sampleSelected: SectionDoc = {
   id: nanoid(), // Unique ID
-  type: "", // Header
+  type: "Header", // Header
   name: "", // HeaderOne
   comp_name: "",
 

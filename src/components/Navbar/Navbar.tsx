@@ -8,7 +8,8 @@ interface NavbarInterface {
 }
 
 const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
-  const { title, sections, color, editingSections } = useAppContext();
+  const { title, sections, color, editingSections, onExporting, is_exporting } =
+    useAppContext();
 
   const scrollTo = useCallback((id: string) => {
     const container = document.getElementById(id);
@@ -30,7 +31,7 @@ const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
           </span>
         </a>
         <div className="flex md:order-2">
-          {!editingSections && (
+          {!editingSections && !is_exporting && (
             <button
               type="button"
               onClick={onClickSetting}
@@ -42,10 +43,10 @@ const Navbar: React.FC<NavbarInterface> = ({ onClickSetting }) => {
               <TitleText value={"Setting"} size="sm" color="#fff" />
             </button>
           )}
-          {!editingSections && (
+          {!editingSections && !is_exporting && (
             <button
               type="button"
-              onClick={onClickSetting}
+              onClick={onExporting}
               className="text-white bg-yellow-400 rounded-lg text-sm px-3 py-1 text-center mr-3 md:mr-0"
             >
               <TitleText value={"Export"} size="sm" color="#fff" />
