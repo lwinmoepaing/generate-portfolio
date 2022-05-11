@@ -4,6 +4,7 @@ import { SectionDoc } from "../../model/AppContextType";
 import CarouselOne from "../Carousel/CarouselOne";
 import GalleryOne from "../Gallery/GalleryOne";
 import HeaderOne from "../Headers/HeaderOne";
+import ProjectCounterOne from "../ProjectCounter/ProjectCounterOne";
 import TimeLineOne from "../TimeLine/TimeLineOne";
 
 interface SwitcherDetailInterface {
@@ -40,6 +41,11 @@ const SwitcherDetail: React.FC<SwitcherDetailInterface> = ({
       {selectedComponent.type === "Gallery" &&
         selectedComponent.comp_name === "GalleryOne" && (
           <GalleryOne item={selectedComponent} />
+        )}
+
+      {selectedComponent.type === "ProjectCounter" &&
+        selectedComponent.comp_name === "ProjectCounterOne" && (
+          <ProjectCounterOne item={selectedComponent} />
         )}
     </div>
   );

@@ -31,6 +31,15 @@ export interface CarouselDoc {
   body_text: string;
 }
 
+export interface ProjectCounterDoc {
+  id: string;
+  image_name: string;
+  image_type: "normal" | "svg";
+  title_text: string;
+  body_text: string;
+  counter: number;
+}
+
 export interface GalleryDoc {
   id: string;
   image_name: string;
@@ -68,7 +77,13 @@ export interface ButtonDoc {
 }
 export interface SectionDoc {
   id: string; // Unique ID
-  type: "Header" | "Carousel" | "TimeLine" | "Contact Us" | "Gallery"; // Header
+  type:
+    | "Header"
+    | "Carousel"
+    | "TimeLine"
+    | "ContactUs"
+    | "Gallery"
+    | "ProjectCounter"; // Header
   name: string; // Nav Name -> Home, About
   comp_name: string; // HeaderOne, HeaderTwo
 
@@ -83,7 +98,8 @@ export interface SectionDoc {
   time_lines?: TimeLineDoc[];
   carousels?: CarouselDoc[];
   galleries?: GalleryDoc[];
-  buttons: ButtonDoc[];
+  project_counter_list?: ProjectCounterDoc[];
+  buttons?: ButtonDoc[];
 }
 
 export interface AppContextInterface {

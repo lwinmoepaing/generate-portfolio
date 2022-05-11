@@ -3,6 +3,7 @@ import { useAppContext } from "../../Context/AppContext";
 import CarouselList from "../Carousel/CarouselList";
 import GalleryList from "../Gallery/GalleryList";
 import HeaderList from "../Headers/HeaderList";
+import ProjectCounterList from "../ProjectCounter/ProjectCounterList";
 import TimeLineList from "../TimeLine/TimeLineList";
 
 interface selectedComponentInterface {
@@ -35,6 +36,10 @@ const Switcher: React.FC<SwitcherInterface> = ({
 
       {selectedComponent.id === "Gallery" && (
         <GalleryList {...selectedComponent} onSelected={onSelected} />
+      )}
+
+      {selectedComponent.id === "ProjectCounter" && (
+        <ProjectCounterList {...selectedComponent} onSelected={onSelected} />
       )}
     </>
   );

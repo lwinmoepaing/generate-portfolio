@@ -4,6 +4,7 @@ import {
   ButtonDoc,
   CarouselDoc,
   GalleryDoc,
+  ProjectCounterDoc,
   SectionDoc,
   SideImageDoc,
   TimeLineDoc,
@@ -30,7 +31,7 @@ const EditingHook = (item: SectionDoc) => {
   const [sideImg, setSideImage] = useState<SideImageDoc>(
     item.side_image || { image_type: "svg", image_name: "", url: "" }
   );
-  const [buttons, setButtons] = useState<ButtonDoc[]>(item.buttons);
+  const [buttons, setButtons] = useState<ButtonDoc[]>(item.buttons || []);
   const [timeLines, setTimeLines] = useState<TimeLineDoc[]>(
     item?.time_lines || []
   );
@@ -39,6 +40,9 @@ const EditingHook = (item: SectionDoc) => {
   );
   const [galleries, setGalleries] = useState<GalleryDoc[]>(
     item?.galleries || []
+  );
+  const [projectCounters, setProjectCounters] = useState<ProjectCounterDoc[]>(
+    item?.project_counter_list || []
   );
 
   const changeEdit = useCallback(() => {
@@ -53,13 +57,14 @@ const EditingHook = (item: SectionDoc) => {
     setEditTitle(item.title_text);
     setEditTypeEffect(item.type_effect_text?.join(",") || "");
     setEditBodyText(item.body_text);
-    setButtons(item.buttons);
+    setButtons(item.buttons || []);
     setEditName(item.name);
     setEditShowNavbar(item.show_nav_bar);
     setEditSwapDir(item.swap_direction);
     setTimeLines(item.time_lines || []);
     setCarousels(item.carousels || []);
     setGalleries(item.galleries || []);
+    setProjectCounters(item.project_counter_list || []);
     if (item.side_image) {
       setSideImage(item.side_image);
     }
@@ -120,6 +125,17 @@ const EditingHook = (item: SectionDoc) => {
       return;
     }
 
+    if (
+      onDeleteSection &&
+      item.type === "ProjectCounter" &&
+      projectCounters &&
+      projectCounters?.length <= 0
+    ) {
+      setIsEdit(false);
+      onDeleteSection(item);
+      return;
+    }
+
     if (onUpdateSection && item) {
       const updateItem: SectionDoc = {
         ...item,
@@ -134,6 +150,7 @@ const EditingHook = (item: SectionDoc) => {
         time_lines: timeLines,
         carousels: carousels,
         galleries: galleries,
+        project_counter_list: projectCounters,
       };
 
       onUpdateSection(updateItem);
@@ -144,11 +161,12 @@ const EditingHook = (item: SectionDoc) => {
   }, [
     editName,
     onDeleteSection,
+    onUpdateSection,
     item,
     carousels,
     galleries,
     timeLines,
-    onUpdateSection,
+    projectCounters,
     editShowNavbar,
     editSwapDir,
     editTitle,
@@ -201,6 +219,13 @@ const EditingHook = (item: SectionDoc) => {
     setGalleries(glr);
   }, []);
 
+  const onChangeProjectCounters = useCallback(
+    (pjCounter: ProjectCounterDoc[]) => {
+      setProjectCounters(pjCounter);
+    },
+    []
+  );
+
   return {
     isEdit,
     editTitle,
@@ -214,6 +239,7 @@ const EditingHook = (item: SectionDoc) => {
     timeLines,
     carousels,
     galleries,
+    projectCounters,
     changeEdit,
     onCancelEdit,
     handlerTitle,
@@ -226,6 +252,7 @@ const EditingHook = (item: SectionDoc) => {
     onChangeTimelines,
     onChangeCarousels,
     onChangeGalleries,
+    onChangeProjectCounters,
     onChangeImage,
     handlerName,
     handShowNavbar,

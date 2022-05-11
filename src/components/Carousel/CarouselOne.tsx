@@ -140,6 +140,7 @@ const CarouselOne: React.FC<CarouselOneInterface> = ({ item }) => {
           onChangeDir={handleSwapDir}
           onChangeName={handlerName}
           onChangeShowNavbar={handShowNavbar}
+          isHideSwap={true}
         />
       )}
     </div>

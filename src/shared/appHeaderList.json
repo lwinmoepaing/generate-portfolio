@@ -18,5 +18,10 @@
     "id": "Gallery",
     "name": "Gallery",
     "list": ["GalleryOne"]
+  },
+  {
+    "id": "ProjectCounter",
+    "name": "ProjectCounter",
+    "list": ["ProjectCounterOne"]
   }
 ]

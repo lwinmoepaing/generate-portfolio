@@ -93,8 +93,6 @@ const GalleryHook = () => {
   );
 
   const onClickGallery = useCallback((item: GalleryDoc) => {
-    console.log("Inside");
-    console.log(item);
     if (item.action_type === "alert") {
       toast(item.alert_title, { position: "top-center", autoClose: 3000 });
       return;
