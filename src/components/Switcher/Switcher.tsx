@@ -1,6 +1,7 @@
 import React from "react";
 import { useAppContext } from "../../Context/AppContext";
 import CarouselList from "../Carousel/CarouselList";
+import GalleryList from "../Gallery/GalleryList";
 import HeaderList from "../Headers/HeaderList";
 import TimeLineList from "../TimeLine/TimeLineList";
 
@@ -30,6 +31,10 @@ const Switcher: React.FC<SwitcherInterface> = ({
 
       {selectedComponent.id === "Carousel" && (
         <CarouselList {...selectedComponent} onSelected={onSelected} />
+      )}
+
+      {selectedComponent.id === "Gallery" && (
+        <GalleryList {...selectedComponent} onSelected={onSelected} />
       )}
     </>
   );

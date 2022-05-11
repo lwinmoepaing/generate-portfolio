@@ -3,6 +3,7 @@ import { useAppContext } from "../Context/AppContext";
 import {
   ButtonDoc,
   CarouselDoc,
+  GalleryDoc,
   SectionDoc,
   SideImageDoc,
   TimeLineDoc,
@@ -36,6 +37,9 @@ const EditingHook = (item: SectionDoc) => {
   const [carousels, setCarousels] = useState<CarouselDoc[]>(
     item?.carousels || []
   );
+  const [galleries, setGalleries] = useState<GalleryDoc[]>(
+    item?.galleries || []
+  );
 
   const changeEdit = useCallback(() => {
     setIsEdit(true);
@@ -55,6 +59,7 @@ const EditingHook = (item: SectionDoc) => {
     setEditSwapDir(item.swap_direction);
     setTimeLines(item.time_lines || []);
     setCarousels(item.carousels || []);
+    setGalleries(item.galleries || []);
     if (item.side_image) {
       setSideImage(item.side_image);
     }
@@ -94,6 +99,17 @@ const EditingHook = (item: SectionDoc) => {
 
     if (
       onDeleteSection &&
+      item.type === "Gallery" &&
+      galleries &&
+      galleries?.length <= 0
+    ) {
+      setIsEdit(false);
+      onDeleteSection(item);
+      return;
+    }
+
+    if (
+      onDeleteSection &&
       item.type === "TimeLine" &&
       timeLines &&
       timeLines?.length <= 0
@@ -117,6 +133,7 @@ const EditingHook = (item: SectionDoc) => {
         buttons: buttons,
         time_lines: timeLines,
         carousels: carousels,
+        galleries: galleries,
       };
 
       onUpdateSection(updateItem);
@@ -125,10 +142,13 @@ const EditingHook = (item: SectionDoc) => {
 
     setIsEdit(false);
   }, [
-    carousels,
     editName,
-    onUpdateSection,
+    onDeleteSection,
     item,
+    carousels,
+    galleries,
+    timeLines,
+    onUpdateSection,
     editShowNavbar,
     editSwapDir,
     editTitle,
@@ -136,7 +156,6 @@ const EditingHook = (item: SectionDoc) => {
     editTypeEffect,
     sideImg,
     buttons,
-    timeLines,
   ]);
 
   const onDelete = useCallback(() => {
@@ -178,6 +197,10 @@ const EditingHook = (item: SectionDoc) => {
     setCarousels(cls);
   }, []);
 
+  const onChangeGalleries = useCallback((glr: GalleryDoc[]) => {
+    setGalleries(glr);
+  }, []);
+
   return {
     isEdit,
     editTitle,
@@ -190,6 +213,7 @@ const EditingHook = (item: SectionDoc) => {
     buttons,
     timeLines,
     carousels,
+    galleries,
     changeEdit,
     onCancelEdit,
     handlerTitle,
@@ -201,6 +225,7 @@ const EditingHook = (item: SectionDoc) => {
     onChangeButtons,
     onChangeTimelines,
     onChangeCarousels,
+    onChangeGalleries,
     onChangeImage,
     handlerName,
     handShowNavbar,

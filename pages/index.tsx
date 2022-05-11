@@ -8,6 +8,7 @@ import Navbar from "../src/components/Navbar/Navbar";
 import BaseContextModal from "../src/components/Modal/BaseContextModal";
 import SectionList from "../src/components/Section/SectionList";
 import Footer from "../src/components/Footer/Footer";
+import { ToastContainer } from "react-toastify";
 
 const Home: NextPage = () => {
   const [compOpenModal, setOpenCompModal] = useState<boolean>(false);
@@ -41,6 +42,8 @@ const Home: NextPage = () => {
         )}
 
         <Footer />
+
+        <ToastContainer />
       </AppContextProvider>
     </div>
   );

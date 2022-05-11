@@ -8,10 +8,12 @@ const sideClasses =
 interface CarouselImageInterface {
   onChangeImage: (a: string) => void | any;
   style?: any;
+  additionalClass?: string;
 }
 
 const CarouselImageUpload: React.FC<CarouselImageInterface> = ({
   onChangeImage,
+  additionalClass,
   style,
 }) => {
   const { color } = useAppContext();
@@ -59,6 +61,17 @@ const CarouselImageUpload: React.FC<CarouselImageInterface> = ({
     [onChangeImage]
   );
 
+  const classes = useMemo(() => {
+    const defaultClass =
+      "bg-red-700 rounded-full flex items-center z-10 justify-center animate__animated animate__fadeIn cursor-pointer";
+
+    if (additionalClass) {
+      return defaultClass + " " + additionalClass;
+    }
+
+    return defaultClass + " " + "h-16 w-16 mr-4";
+  }, [additionalClass]);
+
   return (
     <>
       <input
@@ -71,16 +84,14 @@ const CarouselImageUpload: React.FC<CarouselImageInterface> = ({
 
       <div
         onClick={onClickImage}
-        className={
-          "mr-4 h-16 w-16 bg-red-700 rounded-full flex items-center z-10 justify-center animate__animated animate__fadeIn cursor-pointer"
-        }
+        className={classes}
         style={{
           backgroundColor: color.primary,
         }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8 text-white"
+          className="h-7 w-7 text-white"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

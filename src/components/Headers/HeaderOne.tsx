@@ -1,9 +1,8 @@
-import React, { useCallback, useMemo, useState } from "react";
-import { SectionDoc, SideImageDoc } from "../../model/AppContextType";
+import React, { useMemo } from "react";
+import { SectionDoc } from "../../model/AppContextType";
 import ReactTypingEffect from "react-typing-effect";
 import BodyText from "../Common/BodyText";
 import TitleText from "../Common/TitleText";
-import DeveloperOneSVG from "../Svgs/DeveloperOneSVG";
 import { useAppContext } from "../../Context/AppContext";
 import SectionEditBoxWrapper from "../Common/SectionEditBoxWrapper";
 import SvgSwitcher from "../Switcher/SvgSwticher";

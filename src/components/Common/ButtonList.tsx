@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useAppContext } from "../../Context/AppContext";
 import { ButtonDoc } from "../../model/AppContextType";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import TitleText from "./TitleText";
 import ButtonEditModal from "../Modal/ButtonEditModal";
 import { nanoid } from "nanoid";
@@ -154,7 +154,6 @@ const ButtonList: React.FC<ButtonListInterface> = ({
           onCloseModal={() => setOpenModal(false)}
         />
       )}
-      <ToastContainer />
     </div>
   );
 };

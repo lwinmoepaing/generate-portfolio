@@ -13,5 +13,10 @@
     "id": "Carousel",
     "name": "Carousel",
     "list": ["CarouselOne"]
+  },
+  {
+    "id": "Gallery",
+    "name": "Gallery",
+    "list": ["GalleryOne"]
   }
 ]

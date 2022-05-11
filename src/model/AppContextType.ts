@@ -30,6 +30,18 @@ export interface CarouselDoc {
   title_text: string;
   body_text: string;
 }
+
+export interface GalleryDoc {
+  id: string;
+  image_name: string;
+  image_type: "normal";
+  title_text: string;
+  body_text: string;
+  action_type: "url" | "alert" | "tel" | "disabled";
+  alert_title?: string;
+  phone?: string;
+  url?: string;
+}
 export interface SideImageDoc {
   image_type: "normal" | "svg";
   image_name: string;
@@ -56,7 +68,7 @@ export interface ButtonDoc {
 }
 export interface SectionDoc {
   id: string; // Unique ID
-  type: "Header" | "Carousel" | "TimeLine" | "Contact Us"; // Header
+  type: "Header" | "Carousel" | "TimeLine" | "Contact Us" | "Gallery"; // Header
   name: string; // Nav Name -> Home, About
   comp_name: string; // HeaderOne, HeaderTwo
 
@@ -70,6 +82,7 @@ export interface SectionDoc {
   side_image?: SideImageDoc;
   time_lines?: TimeLineDoc[];
   carousels?: CarouselDoc[];
+  galleries?: GalleryDoc[];
   buttons: ButtonDoc[];
 }
 

@@ -59,7 +59,7 @@ const CarouselHook = () => {
     []
   );
 
-  const onUpTimeLineItem = (
+  const onUpCarrouselComp = (
     carouselList: CarouselDoc[],
     id: string
   ): CarouselDoc[] => {
@@ -80,7 +80,7 @@ const CarouselHook = () => {
     handleImageText,
     handleTitleText,
     handleBodyText,
-    onUpTimeLineItem,
+    onUpCarrouselComp,
   };
 };
 

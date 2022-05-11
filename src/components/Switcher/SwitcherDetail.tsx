@@ -2,6 +2,7 @@ import React from "react";
 import { useAppContext } from "../../Context/AppContext";
 import { SectionDoc } from "../../model/AppContextType";
 import CarouselOne from "../Carousel/CarouselOne";
+import GalleryOne from "../Gallery/GalleryOne";
 import HeaderOne from "../Headers/HeaderOne";
 import TimeLineOne from "../TimeLine/TimeLineOne";
 
@@ -34,6 +35,11 @@ const SwitcherDetail: React.FC<SwitcherDetailInterface> = ({
       {selectedComponent.type === "Carousel" &&
         selectedComponent.comp_name === "CarouselOne" && (
           <CarouselOne item={selectedComponent} />
+        )}
+
+      {selectedComponent.type === "Gallery" &&
+        selectedComponent.comp_name === "GalleryOne" && (
+          <GalleryOne item={selectedComponent} />
         )}
     </div>
   );
